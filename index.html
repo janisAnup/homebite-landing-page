@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>HomeBite</title>
+  <meta name="description" content="Discover nearby homemade food from verified home chefs in your community." />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            primary: { DEFAULT: '#F97316', light: '#FED7AA', dark: '#EA580C' },
+            card: '#FAFAF8',
+          },
+          fontFamily: {
+            serif: ['"Playfair Display"', 'Georgia', 'serif'],
+            sans: ['Inter', 'system-ui', 'sans-serif'],
+          },
+        }
+      }
+    }
+  </script>
+  <style>
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Inter', system-ui, sans-serif; }
+    .font-serif { font-family: 'Playfair Display', Georgia, serif; }
+    .meal-card:hover { transform: translateY(-4px); box-shadow: 0 20px 40px rgba(0,0,0,0.12); }
+    .meal-card { transition: transform 0.3s ease, box-shadow 0.3s ease; }
+    .meal-card img { transition: transform 0.5s ease; }
+    .meal-card:hover img { transform: scale(1.05); }
+    .btn-primary {
+      background-color: #F97316;
+      color: #fff;
+      border-radius: 9999px;
+      padding: 0.75rem 1.75rem;
+      font-weight: 600;
+      font-size: 0.95rem;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      transition: background-color 0.2s, box-shadow 0.2s;
+      box-shadow: 0 4px 14px rgba(249,115,22,0.35);
+      cursor: pointer;
+      border: none;
+    }
+    .btn-primary:hover { background-color: #EA580C; box-shadow: 0 6px 20px rgba(249,115,22,0.45); }
+    .btn-outline {
+      background-color: transparent;
+      color: #1c1410;
+      border-radius: 9999px;
+      padding: 0.75rem 1.75rem;
+      font-weight: 600;
+      font-size: 0.95rem;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border: 1.5px solid #e0d6ce;
+      transition: background-color 0.2s, border-color 0.2s;
+      cursor: pointer;
+    }
+    .btn-outline:hover { background-color: #fff4ed; border-color: #F97316; color: #F97316; }
+    .btn-ghost {
+      background-color: transparent;
+      color: #1c1410;
+      border-radius: 9999px;
+      padding: 0.75rem 1.25rem;
+      font-weight: 500;
+      font-size: 0.95rem;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border: none;
+      cursor: pointer;
+      transition: background-color 0.2s, color 0.2s;
+    }
+    .btn-ghost:hover { background-color: #fff4ed; color: #F97316; }
+    #mobile-menu { display: none; }
+    #mobile-menu.open { display: flex; }
+    .badge {
+      background-color: rgba(255,255,255,0.92);
+      backdrop-filter: blur(4px);
+      color: #1c1410;
+      font-size: 0.7rem;
+      font-weight: 700;
+      padding: 0.3rem 0.7rem;
+      border-radius: 9999px;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.1);
+    }
+    .section-title { font-family: 'Playfair Display', serif; font-weight: 700; color: #1c1410; }
+    .hero-gradient {
+      background: radial-gradient(ellipse at 80% 0%, rgba(249,115,22,0.10) 0%, transparent 65%);
+    }
+  </style>
+</head>
+<body class="bg-white text-gray-900 antialiased">
+
+  <!-- ========== HEADER ========== -->
+  <header class="sticky top-0 z-50 w-full border-b border-stone-100 bg-white/95 backdrop-blur-sm">
+    <div class="max-w-6xl mx-auto px-4 md:px-6 h-16 flex items-center justify-between">
+
+      <!-- Logo -->
+      <a href="#" class="flex items-center gap-2 shrink-0">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7 shrink-0" viewBox="0 0 24 24" fill="none" stroke="#F97316" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M6 13.87A4 4 0 0 1 7.41 6a5.11 5.11 0 0 1 1.05-1.54 5 5 0 0 1 7.08 0A5.11 5.11 0 0 1 16.59 6 4 4 0 0 1 18 13.87V21H6Z"/>
+          <line x1="6" x2="18" y1="17" y2="17"/>
+        </svg>
+        <span class="font-serif text-2xl font-bold tracking-tight text-gray-900">HomeBite</span>
+      </a>
+
+      <!-- Desktop Nav -->
+      <nav class="hidden md:flex items-center gap-8">
+        <a href="#how-it-works" class="text-sm font-medium text-stone-500 hover:text-orange-500 transition-colors">How it Works</a>
+        <a href="#popular-meals" class="text-sm font-medium text-stone-500 hover:text-orange-500 transition-colors">Popular Meals</a>
+        <a href="#testimonials" class="text-sm font-medium text-stone-500 hover:text-orange-500 transition-colors">Testimonials</a>
+      </nav>
+
+      <!-- Desktop CTA -->
+      <div class="hidden md:flex items-center gap-3">
+        <button class="btn-ghost">Log in</button>
+        <button class="btn-primary">Get Started</button>
+      </div>
+
+      <!-- Mobile Toggle -->
+      <button id="menu-toggle" class="md:hidden p-2 text-gray-700 rounded-md" aria-label="Toggle menu" onclick="toggleMenu()">
+        <svg id="icon-open" xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16"/>
+        </svg>
+        <svg id="icon-close" xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/>
+        </svg>
+      </button>
+    </div>
+
+    <!-- Mobile Nav -->
+    <div id="mobile-menu" class="md:hidden absolute top-16 left-0 w-full bg-white border-b border-stone-100 shadow-lg py-4 px-4 flex-col gap-3 z-50">
+      <a href="#how-it-works" onclick="closeMenu()" class="block text-base font-medium px-3 py-2 rounded-lg hover:bg-orange-50 hover:text-orange-500 transition-colors">How it Works</a>
+      <a href="#popular-meals" onclick="closeMenu()" class="block text-base font-medium px-3 py-2 rounded-lg hover:bg-orange-50 hover:text-orange-500 transition-colors">Popular Meals</a>
+      <a href="#testimonials" onclick="closeMenu()" class="block text-base font-medium px-3 py-2 rounded-lg hover:bg-orange-50 hover:text-orange-500 transition-colors">Testimonials</a>
+      <div class="pt-3 border-t border-stone-100 flex flex-col gap-2">
+        <button class="btn-outline w-full">Log in</button>
+        <button class="btn-primary w-full">Get Started</button>
+      </div>
+    </div>
+  </header>
+
+  <main>
+
+    <!-- ========== HERO ========== -->
+    <section class="relative pt-20 pb-32 md:pt-32 md:pb-44 overflow-hidden hero-gradient">
+      <div class="max-w-6xl mx-auto px-4 md:px-6 flex flex-col items-center text-center">
+
+        <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-orange-50 text-orange-500 text-sm font-medium mb-8 border border-orange-100">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 24 24" fill="#F97316" stroke="#F97316" stroke-width="1">
+            <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78L12 21.23l8.84-8.84a5.5 5.5 0 0 0 0-7.78z"/>
+          </svg>
+          <span>Made with love, right in your neighborhood</span>
+        </div>
+
+        <h1 class="font-serif text-5xl md:text-7xl font-bold text-gray-900 leading-tight tracking-tight mb-6 max-w-4xl">
+          Discover real <span class="text-orange-500 italic">home cooking</span> near you.
+        </h1>
+
+        <p class="text-lg md:text-xl text-stone-500 mb-12 max-w-2xl mx-auto leading-relaxed">
+          Not restaurant food. Not delivery apps. Just genuine, mouthwatering meals prepared by verified home chefs in your community.
+        </p>
+
+        <div class="flex flex-col sm:flex-row items-center justify-center gap-3 w-full max-w-md mx-auto">
+          <div class="relative w-full">
+            <svg xmlns="http://www.w3.org/2000/svg" class="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-stone-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/>
+              <path stroke-linecap="round" stroke-linejoin="round" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/>
+            </svg>
+            <input
+              type="text"
+              placeholder="Enter your zip code..."
+              class="w-full h-14 pl-12 pr-4 rounded-full border border-stone-200 bg-white text-gray-900 shadow-sm focus:outline-none focus:ring-2 focus:ring-orange-300 focus:border-orange-400 transition"
+            />
+          </div>
+          <button class="btn-primary w-full sm:w-auto h-14 px-8 text-base shrink-0">
+            Find Food Near You
+          </button>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ========== FEATURES ========== -->
+    <section id="how-it-works" class="py-24 bg-stone-50">
+      <div class="max-w-6xl mx-auto px-4 md:px-6">
+
+        <div class="text-center mb-16">
+          <h2 class="section-title text-3xl md:text-4xl mb-4">How HomeBite Works</h2>
+          <p class="text-stone-500 text-lg max-w-2xl mx-auto">We make it simple to eat well and support local talent.</p>
+        </div>
+
+        <div class="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto">
+
+          <div class="bg-white rounded-2xl p-8 shadow-sm border border-stone-100 text-center flex flex-col items-center hover:shadow-md transition-shadow">
+            <div class="h-16 w-16 rounded-full bg-orange-50 flex items-center justify-center mb-6">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="#F97316" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+              </svg>
+            </div>
+            <h3 class="text-xl font-bold text-gray-900 mb-3">Verified Home Chefs</h3>
+            <p class="text-stone-500 leading-relaxed">Every chef is vetted for quality and safety. We taste-test and approve before they join.</p>
+          </div>
+
+          <div class="bg-white rounded-2xl p-8 shadow-sm border border-stone-100 text-center flex flex-col items-center hover:shadow-md transition-shadow">
+            <div class="h-16 w-16 rounded-full bg-orange-50 flex items-center justify-center mb-6">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="#F97316" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"/>
+              </svg>
+            </div>
+            <h3 class="text-xl font-bold text-gray-900 mb-3">Fresh &amp; Homemade</h3>
+            <p class="text-stone-500 leading-relaxed">No industrial kitchens. Just small-batch, authentic recipes made from scratch daily.</p>
+          </div>
+
+          <div class="bg-white rounded-2xl p-8 shadow-sm border border-stone-100 text-center flex flex-col items-center hover:shadow-md transition-shadow">
+            <div class="h-16 w-16 rounded-full bg-orange-50 flex items-center justify-center mb-6">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="#F97316" stroke-width="2">
+                <circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/>
+              </svg>
+            </div>
+            <h3 class="text-xl font-bold text-gray-900 mb-3">Delivered to Your Door</h3>
+            <p class="text-stone-500 leading-relaxed">Pick it up fresh from the oven, or have it delivered hot straight to your dining table.</p>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ========== POPULAR MEALS ========== -->
+    <section id="popular-meals" class="py-24 bg-white">
+      <div class="max-w-6xl mx-auto px-4 md:px-6">
+
+        <div class="flex flex-col md:flex-row items-end justify-between mb-12 gap-4">
+          <div>
+            <h2 class="section-title text-3xl md:text-4xl mb-4">Simmering Near You</h2>
+            <p class="text-stone-500 text-lg max-w-xl">Explore tonight's menu from the best home kitchens in your neighborhood.</p>
+          </div>
+          <button class="btn-outline hidden md:inline-flex">View All Meals</button>
+        </div>
+
+        <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
+
+          <article class="meal-card rounded-2xl bg-stone-50 border border-stone-100 overflow-hidden cursor-pointer">
+            <div class="relative h-64 overflow-hidden">
+              <img src="https://images.unsplash.com/photo-1563379091339-03246963d264?auto=format&fit=crop&w=600&q=80" alt="Authentic Chicken Biryani" class="w-full h-full object-cover" loading="lazy" />
+              <span class="badge absolute top-4 right-4">Indian</span>
+            </div>
+            <div class="p-6">
+              <h3 class="text-xl font-bold text-gray-900 mb-1 truncate">Authentic Chicken Biryani</h3>
+              <p class="text-stone-500 text-sm mb-4">By Chef Aisha M.</p>
+              <div class="flex items-center justify-between">
+                <span class="font-serif text-xl font-bold text-gray-900">$16.50</span>
+                <div class="flex items-center gap-1 bg-orange-50 px-2.5 py-1 rounded-lg">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 24 24" fill="#F97316" stroke="#F97316" stroke-width="1"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                  <span class="text-sm font-semibold text-gray-800">4.9</span>
+                </div>
+              </div>
+            </div>
+          </article>
+
+          <article class="meal-card rounded-2xl bg-stone-50 border border-stone-100 overflow-hidden cursor-pointer">
+            <div class="relative h-64 overflow-hidden">
+              <img src="https://images.unsplash.com/photo-1621996346565-e3dbc646d9a9?auto=format&fit=crop&w=600&q=80" alt="Handmade Tagliatelle" class="w-full h-full object-cover" loading="lazy" />
+              <span class="badge absolute top-4 right-4">Italian</span>
+            </div>
+            <div class="p-6">
+              <h3 class="text-xl font-bold text-gray-900 mb-1 truncate">Handmade Tagliatelle</h3>
+              <p class="text-stone-500 text-sm mb-4">By Chef Marco V.</p>
+              <div class="flex items-center justify-between">
+                <span class="font-serif text-xl font-bold text-gray-900">$18.00</span>
+                <div class="flex items-center gap-1 bg-orange-50 px-2.5 py-1 rounded-lg">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 24 24" fill="#F97316" stroke="#F97316" stroke-width="1"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                  <span class="text-sm font-semibold text-gray-800">4.8</span>
+                </div>
+              </div>
+            </div>
+          </article>
+
+          <article class="meal-card rounded-2xl bg-stone-50 border border-stone-100 overflow-hidden cursor-pointer">
+            <div class="relative h-64 overflow-hidden">
+              <img src="https://images.unsplash.com/photo-1455619452474-d2be8b1e70cd?auto=format&fit=crop&w=600&q=80" alt="Vegan Thai Green Curry" class="w-full h-full object-cover" loading="lazy" />
+              <span class="badge absolute top-4 right-4">Thai</span>
+            </div>
+            <div class="p-6">
+              <h3 class="text-xl font-bold text-gray-900 mb-1 truncate">Vegan Thai Green Curry</h3>
+              <p class="text-stone-500 text-sm mb-4">By Chef Ploy S.</p>
+              <div class="flex items-center justify-between">
+                <span class="font-serif text-xl font-bold text-gray-900">$15.00</span>
+                <div class="flex items-center gap-1 bg-orange-50 px-2.5 py-1 rounded-lg">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 24 24" fill="#F97316" stroke="#F97316" stroke-width="1"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                  <span class="text-sm font-semibold text-gray-800">4.7</span>
+                </div>
+              </div>
+            </div>
+          </article>
+
+          <article class="meal-card rounded-2xl bg-stone-50 border border-stone-100 overflow-hidden cursor-pointer">
+            <div class="relative h-64 overflow-hidden">
+              <img src="https://images.unsplash.com/photo-1565299585323-38d6b0865b47?auto=format&fit=crop&w=600&q=80" alt="Street-Style Beef Tacos" class="w-full h-full object-cover" loading="lazy" />
+              <span class="badge absolute top-4 right-4">Mexican</span>
+            </div>
+            <div class="p-6">
+              <h3 class="text-xl font-bold text-gray-900 mb-1 truncate">Street-Style Beef Tacos</h3>
+              <p class="text-stone-500 text-sm mb-4">By Chef Carlos R.</p>
+              <div class="flex items-center justify-between">
+                <span class="font-serif text-xl font-bold text-gray-900">$12.00</span>
+                <div class="flex items-center gap-1 bg-orange-50 px-2.5 py-1 rounded-lg">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 24 24" fill="#F97316" stroke="#F97316" stroke-width="1"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                  <span class="text-sm font-semibold text-gray-800">4.9</span>
+                </div>
+              </div>
+            </div>
+          </article>
+
+          <article class="meal-card rounded-2xl bg-stone-50 border border-stone-100 overflow-hidden cursor-pointer">
+            <div class="relative h-64 overflow-hidden">
+              <img src="https://images.unsplash.com/photo-1617196034183-421b4040ed20?auto=format&fit=crop&w=600&q=80" alt="Korean BBQ Beef Bowl" class="w-full h-full object-cover" loading="lazy" />
+              <span class="badge absolute top-4 right-4">Korean</span>
+            </div>
+            <div class="p-6">
+              <h3 class="text-xl font-bold text-gray-900 mb-1 truncate">Korean BBQ Beef Bowl</h3>
+              <p class="text-stone-500 text-sm mb-4">By Chef Min-ji K.</p>
+              <div class="flex items-center justify-between">
+                <span class="font-serif text-xl font-bold text-gray-900">$17.50</span>
+                <div class="flex items-center gap-1 bg-orange-50 px-2.5 py-1 rounded-lg">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 24 24" fill="#F97316" stroke="#F97316" stroke-width="1"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                  <span class="text-sm font-semibold text-gray-800">4.8</span>
+                </div>
+              </div>
+            </div>
+          </article>
+
+          <article class="meal-card rounded-2xl bg-stone-50 border border-stone-100 overflow-hidden cursor-pointer">
+            <div class="relative h-64 overflow-hidden">
+              <img src="https://images.unsplash.com/photo-1574484284002-952d92456975?auto=format&fit=crop&w=600&q=80" alt="Slow-Cooked Lamb Tagine" class="w-full h-full object-cover" loading="lazy" />
+              <span class="badge absolute top-4 right-4">Moroccan</span>
+            </div>
+            <div class="p-6">
+              <h3 cl
