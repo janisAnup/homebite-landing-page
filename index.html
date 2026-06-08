@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -83,6 +84,7 @@
     .btn-ghost:hover { background-color: #fff4ed; color: #F97316; }
     #mobile-menu { display: none; }
     #mobile-menu.open { display: flex; }
+    .star-filled { color: #F97316; }
     .badge {
       background-color: rgba(255,255,255,0.92);
       backdrop-filter: blur(4px);
@@ -107,9 +109,13 @@
 
       <!-- Logo -->
       <a href="#" class="flex items-center gap-2 shrink-0">
-        <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7 shrink-0" viewBox="0 0 24 24" fill="none" stroke="#F97316" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          <path d="M6 13.87A4 4 0 0 1 7.41 6a5.11 5.11 0 0 1 1.05-1.54 5 5 0 0 1 7.08 0A5.11 5.11 0 0 1 16.59 6 4 4 0 0 1 18 13.87V21H6Z"/>
-          <line x1="6" x2="18" y1="17" y2="17"/>
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" style="color:#F97316">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M17 8C8 10 5.9 16.17 3.82 19.92M9 3H5a2 2 0 00-2 2v4h6V3zm8 0h-4v6h6V5a2 2 0 00-2-2zm-5 14a4 4 0 01-8 0" />
+          <path stroke-linecap="round" stroke-linejoin="round" d="M12 2a1 1 0 011 1v3h-2V3a1 1 0 011-1z" />
+        </svg>
+        <!-- Chef hat SVG icon -->
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7 shrink-0" viewBox="0 0 24 24" fill="none" stroke="#F97316" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:none">
+          <path d="M6 13.87A4 4 0 0 1 7.41 6a5.11 5.11 0 0 1 1.05-1.54 5 5 0 0 1 7.08 0A5.11 5.11 0 0 1 16.59 6 4 4 0 0 1 18 13.87V21H6Z"/><line x1="6" x2="18" y1="17" y2="17"/>
         </svg>
         <span class="font-serif text-2xl font-bold tracking-tight text-gray-900">HomeBite</span>
       </a>
@@ -156,6 +162,7 @@
     <section class="relative pt-20 pb-32 md:pt-32 md:pb-44 overflow-hidden hero-gradient">
       <div class="max-w-6xl mx-auto px-4 md:px-6 flex flex-col items-center text-center">
 
+        <!-- Badge -->
         <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-orange-50 text-orange-500 text-sm font-medium mb-8 border border-orange-100">
           <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 24 24" fill="#F97316" stroke="#F97316" stroke-width="1">
             <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78L12 21.23l8.84-8.84a5.5 5.5 0 0 0 0-7.78z"/>
@@ -163,14 +170,17 @@
           <span>Made with love, right in your neighborhood</span>
         </div>
 
+        <!-- Headline -->
         <h1 class="font-serif text-5xl md:text-7xl font-bold text-gray-900 leading-tight tracking-tight mb-6 max-w-4xl">
           Discover real <span class="text-orange-500 italic">home cooking</span> near you.
         </h1>
 
+        <!-- Subheadline -->
         <p class="text-lg md:text-xl text-stone-500 mb-12 max-w-2xl mx-auto leading-relaxed">
           Not restaurant food. Not delivery apps. Just genuine, mouthwatering meals prepared by verified home chefs in your community.
         </p>
 
+        <!-- Search + CTA -->
         <div class="flex flex-col sm:flex-row items-center justify-center gap-3 w-full max-w-md mx-auto">
           <div class="relative w-full">
             <svg xmlns="http://www.w3.org/2000/svg" class="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-stone-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
@@ -202,6 +212,7 @@
 
         <div class="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto">
 
+          <!-- Card 1 -->
           <div class="bg-white rounded-2xl p-8 shadow-sm border border-stone-100 text-center flex flex-col items-center hover:shadow-md transition-shadow">
             <div class="h-16 w-16 rounded-full bg-orange-50 flex items-center justify-center mb-6">
               <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="#F97316" stroke-width="2">
@@ -212,6 +223,7 @@
             <p class="text-stone-500 leading-relaxed">Every chef is vetted for quality and safety. We taste-test and approve before they join.</p>
           </div>
 
+          <!-- Card 2 -->
           <div class="bg-white rounded-2xl p-8 shadow-sm border border-stone-100 text-center flex flex-col items-center hover:shadow-md transition-shadow">
             <div class="h-16 w-16 rounded-full bg-orange-50 flex items-center justify-center mb-6">
               <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="#F97316" stroke-width="2">
@@ -222,6 +234,7 @@
             <p class="text-stone-500 leading-relaxed">No industrial kitchens. Just small-batch, authentic recipes made from scratch daily.</p>
           </div>
 
+          <!-- Card 3 -->
           <div class="bg-white rounded-2xl p-8 shadow-sm border border-stone-100 text-center flex flex-col items-center hover:shadow-md transition-shadow">
             <div class="h-16 w-16 rounded-full bg-orange-50 flex items-center justify-center mb-6">
               <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="#F97316" stroke-width="2">
@@ -250,6 +263,7 @@
 
         <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
 
+          <!-- Meal 1 -->
           <article class="meal-card rounded-2xl bg-stone-50 border border-stone-100 overflow-hidden cursor-pointer">
             <div class="relative h-64 overflow-hidden">
               <img src="https://images.unsplash.com/photo-1563379091339-03246963d264?auto=format&fit=crop&w=600&q=80" alt="Authentic Chicken Biryani" class="w-full h-full object-cover" loading="lazy" />
@@ -261,13 +275,16 @@
               <div class="flex items-center justify-between">
                 <span class="font-serif text-xl font-bold text-gray-900">$16.50</span>
                 <div class="flex items-center gap-1 bg-orange-50 px-2.5 py-1 rounded-lg">
-                  <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 24 24" fill="#F97316" stroke="#F97316" stroke-width="1"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                  <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 24 24" fill="#F97316" stroke="#F97316" stroke-width="1">
+                    <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+                  </svg>
                   <span class="text-sm font-semibold text-gray-800">4.9</span>
                 </div>
               </div>
             </div>
           </article>
 
+          <!-- Meal 2 -->
           <article class="meal-card rounded-2xl bg-stone-50 border border-stone-100 overflow-hidden cursor-pointer">
             <div class="relative h-64 overflow-hidden">
               <img src="https://images.unsplash.com/photo-1621996346565-e3dbc646d9a9?auto=format&fit=crop&w=600&q=80" alt="Handmade Tagliatelle" class="w-full h-full object-cover" loading="lazy" />
@@ -279,13 +296,16 @@
               <div class="flex items-center justify-between">
                 <span class="font-serif text-xl font-bold text-gray-900">$18.00</span>
                 <div class="flex items-center gap-1 bg-orange-50 px-2.5 py-1 rounded-lg">
-                  <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 24 24" fill="#F97316" stroke="#F97316" stroke-width="1"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                  <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 24 24" fill="#F97316" stroke="#F97316" stroke-width="1">
+                    <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+                  </svg>
                   <span class="text-sm font-semibold text-gray-800">4.8</span>
                 </div>
               </div>
             </div>
           </article>
 
+          <!-- Meal 3 -->
           <article class="meal-card rounded-2xl bg-stone-50 border border-stone-100 overflow-hidden cursor-pointer">
             <div class="relative h-64 overflow-hidden">
               <img src="https://images.unsplash.com/photo-1455619452474-d2be8b1e70cd?auto=format&fit=crop&w=600&q=80" alt="Vegan Thai Green Curry" class="w-full h-full object-cover" loading="lazy" />
@@ -297,13 +317,16 @@
               <div class="flex items-center justify-between">
                 <span class="font-serif text-xl font-bold text-gray-900">$15.00</span>
                 <div class="flex items-center gap-1 bg-orange-50 px-2.5 py-1 rounded-lg">
-                  <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 24 24" fill="#F97316" stroke="#F97316" stroke-width="1"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                  <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 24 24" fill="#F97316" stroke="#F97316" stroke-width="1">
+                    <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+                  </svg>
                   <span class="text-sm font-semibold text-gray-800">4.7</span>
                 </div>
               </div>
             </div>
           </article>
 
+          <!-- Meal 4 -->
           <article class="meal-card rounded-2xl bg-stone-50 border border-stone-100 overflow-hidden cursor-pointer">
             <div class="relative h-64 overflow-hidden">
               <img src="https://images.unsplash.com/photo-1565299585323-38d6b0865b47?auto=format&fit=crop&w=600&q=80" alt="Street-Style Beef Tacos" class="w-full h-full object-cover" loading="lazy" />
@@ -315,13 +338,16 @@
               <div class="flex items-center justify-between">
                 <span class="font-serif text-xl font-bold text-gray-900">$12.00</span>
                 <div class="flex items-center gap-1 bg-orange-50 px-2.5 py-1 rounded-lg">
-                  <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 24 24" fill="#F97316" stroke="#F97316" stroke-width="1"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                  <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 24 24" fill="#F97316" stroke="#F97316" stroke-width="1">
+                    <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+                  </svg>
                   <span class="text-sm font-semibold text-gray-800">4.9</span>
                 </div>
               </div>
             </div>
           </article>
 
+           <!-- Meal 5 -->
           <article class="meal-card rounded-2xl bg-stone-50 border border-stone-100 overflow-hidden cursor-pointer">
             <div class="relative h-64 overflow-hidden">
               <img src="https://images.unsplash.com/photo-1617196034183-421b4040ed20?auto=format&fit=crop&w=600&q=80" alt="Korean BBQ Beef Bowl" class="w-full h-full object-cover" loading="lazy" />
@@ -333,17 +359,216 @@
               <div class="flex items-center justify-between">
                 <span class="font-serif text-xl font-bold text-gray-900">$17.50</span>
                 <div class="flex items-center gap-1 bg-orange-50 px-2.5 py-1 rounded-lg">
-                  <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 24 24" fill="#F97316" stroke="#F97316" stroke-width="1"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                  <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 24 24" fill="#F97316" stroke="#F97316" stroke-width="1">
+                    <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+                  </svg>
                   <span class="text-sm font-semibold text-gray-800">4.8</span>
                 </div>
               </div>
             </div>
           </article>
 
+          <!-- Meal 6 -->
           <article class="meal-card rounded-2xl bg-stone-50 border border-stone-100 overflow-hidden cursor-pointer">
             <div class="relative h-64 overflow-hidden">
               <img src="https://images.unsplash.com/photo-1574484284002-952d92456975?auto=format&fit=crop&w=600&q=80" alt="Slow-Cooked Lamb Tagine" class="w-full h-full object-cover" loading="lazy" />
               <span class="badge absolute top-4 right-4">Moroccan</span>
             </div>
             <div class="p-6">
-              <h3 cl
+              <h3 class="text-xl font-bold text-gray-900 mb-1 truncate">Slow-Cooked Lamb Tagine</h3>
+              <p class="text-stone-500 text-sm mb-4">By Chef Fatima B.</p>
+              <div class="flex items-center justify-between">
+                <span class="font-serif text-xl font-bold text-gray-900">$21.00</span>
+                <div class="flex items-center gap-1 bg-orange-50 px-2.5 py-1 rounded-lg">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 24 24" fill="#F97316" stroke="#F97316" stroke-width="1">
+                    <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+                  </svg>
+                  <span class="text-sm font-semibold text-gray-800">5.0</span>
+                </div>
+              </div>
+            </div>
+          </article>
+
+        </div>
+
+        <!-- Mobile View All -->
+        <div class="mt-10 text-center md:hidden">
+          <button class="btn-outline w-full sm:w-auto">View All Meals</button>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ========== TESTIMONIALS ========== -->
+    <section id="testimonials" class="py-24 bg-stone-50 relative overflow-hidden">
+      <div class="absolute left-0 top-1/2 -translate-y-1/2 w-72 h-72 bg-orange-100 rounded-full blur-3xl opacity-40 pointer-events-none"></div>
+
+      <div class="max-w-6xl mx-auto px-4 md:px-6 relative z-10">
+
+        <div class="text-center mb-16">
+          <h2 class="section-title text-3xl md:text-4xl mb-4">What Neighbors Are Saying</h2>
+          <p class="text-stone-500 text-lg max-w-2xl mx-auto">Don't just take our word for it.</p>
+        </div>
+
+        <div class="grid md:grid-cols-3 gap-8">
+
+          <!-- Testimonial 1 -->
+          <div class="bg-white rounded-2xl p-8 shadow-sm border border-stone-100">
+            <div class="flex gap-1 mb-6">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 24 24" fill="#F97316" stroke="#F97316" stroke-width="1"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 24 24" fill="#F97316" stroke="#F97316" stroke-width="1"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 24 24" fill="#F97316" stroke="#F97316" stroke-width="1"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 24 24" fill="#F97316" stroke="#F97316" stroke-width="1"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 24 24" fill="#F97316" stroke="#F97316" stroke-width="1"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+            </div>
+            <p class="font-serif italic text-lg text-gray-800 mb-8 leading-relaxed">"The homemade pasta was better than any restaurant in the city. You can literally taste the love Marco puts into his cooking."</p>
+            <div class="flex items-center gap-4">
+              <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=100&q=80" alt="Sarah Jenkins" class="h-12 w-12 rounded-full object-cover border-2 border-stone-100" loading="lazy" />
+              <div>
+                <p class="font-bold text-sm text-gray-900">Sarah Jenkins</p>
+                <p class="text-xs text-stone-500">Local Foodie</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Testimonial 2 -->
+          <div class="bg-white rounded-2xl p-8 shadow-sm border border-stone-100">
+            <div class="flex gap-1 mb-6">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 24 24" fill="#F97316" stroke="#F97316" stroke-width="1"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 24 24" fill="#F97316" stroke="#F97316" stroke-width="1"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 24 24" fill="#F97316" stroke="#F97316" stroke-width="1"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 24 24" fill="#F97316" stroke="#F97316" stroke-width="1"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 24 24" fill="#F97316" stroke="#F97316" stroke-width="1"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+            </div>
+            <p class="font-serif italic text-lg text-gray-800 mb-8 leading-relaxed">"I miss my mom's cooking, but Aisha's Biryani brought me right back home. The portions are huge and the flavors are incredible."</p>
+            <div class="flex items-center gap-4">
+              <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=100&q=80" alt="David Chen" class="h-12 w-12 rounded-full object-cover border-2 border-stone-100" loading="lazy" />
+              <div>
+                <p class="font-bold text-sm text-gray-900">David Chen</p>
+                <p class="text-xs text-stone-500">Local Foodie</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Testimonial 3 -->
+          <div class="bg-white rounded-2xl p-8 shadow-sm border border-stone-100">
+            <div class="flex gap-1 mb-6">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 24 24" fill="#F97316" stroke="#F97316" stroke-width="1"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 24 24" fill="#F97316" stroke="#F97316" stroke-width="1"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 24 24" fill="#F97316" stroke="#F97316" stroke-width="1"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 24 24" fill="#F97316" stroke="#F97316" stroke-width="1"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 24 24" fill="#F97316" stroke="#F97316" stroke-width="1"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+            </div>
+            <p class="font-serif italic text-lg text-gray-800 mb-8 leading-relaxed">"Finally, a way to eat healthy, real food without cooking it myself. HomeBite has completely changed my weekday dinners."</p>
+            <div class="flex items-center gap-4">
+              <img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?auto=format&fit=crop&w=100&q=80" alt="Elena Rodriguez" class="h-12 w-12 rounded-full object-cover border-2 border-stone-100" loading="lazy" />
+              <div>
+                <p class="font-bold text-sm text-gray-900">Elena Rodriguez</p>
+                <p class="text-xs text-stone-500">Local Foodie</p>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ========== FOOTER ========== -->
+  <footer class="bg-gray-900 text-gray-100 py-12 md:py-16">
+    <div class="max-w-6xl mx-auto px-4 md:px-6">
+
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-8 mb-12">
+
+        <!-- Brand -->
+        <div class="col-span-2 md:col-span-1">
+          <div class="flex items-center gap-2 mb-4">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="#F97316" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M6 13.87A4 4 0 0 1 7.41 6a5.11 5.11 0 0 1 1.05-1.54 5 5 0 0 1 7.08 0A5.11 5.11 0 0 1 16.59 6 4 4 0 0 1 18 13.87V21H6Z"/><line x1="6" x2="18" y1="17" y2="17"/>
+            </svg>
+            <span class="font-serif text-2xl font-bold tracking-tight">HomeBite</span>
+          </div>
+          <p class="text-gray-400 text-sm max-w-xs mb-6 leading-relaxed">
+            Connecting communities through authentic, homemade food. Your neighbor's kitchen is now open.
+          </p>
+        </div>
+
+        <!-- Explore -->
+        <div>
+          <h4 class="font-bold text-white mb-4">Explore</h4>
+          <ul class="space-y-2 text-sm text-gray-400">
+            <li><a href="#" class="hover:text-orange-400 transition-colors">Popular Meals</a></li>
+            <li><a href="#" class="hover:text-orange-400 transition-colors">Nearby Chefs</a></li>
+            <li><a href="#" class="hover:text-orange-400 transition-colors">Cuisines</a></li>
+            <li><a href="#" class="hover:text-orange-400 transition-colors">Dietary Needs</a></li>
+          </ul>
+        </div>
+
+        <!-- HomeBite -->
+        <div>
+          <h4 class="font-bold text-white mb-4">HomeBite</h4>
+          <ul class="space-y-2 text-sm text-gray-400">
+            <li><a href="#" class="hover:text-orange-400 transition-colors">About Us</a></li>
+            <li><a href="#" class="hover:text-orange-400 transition-colors">Careers</a></li>
+            <li><a href="#" class="hover:text-orange-400 transition-colors">Become a Chef</a></li>
+            <li><a href="#" class="hover:text-orange-400 transition-colors">Trust &amp; Safety</a></li>
+          </ul>
+        </div>
+
+        <!-- Support -->
+        <div>
+          <h4 class="font-bold text-white mb-4">Support</h4>
+          <ul class="space-y-2 text-sm text-gray-400">
+            <li><a href="#" class="hover:text-orange-400 transition-colors">Help Center</a></li>
+            <li><a href="#" class="hover:text-orange-400 transition-colors">Contact Us</a></li>
+            <li><a href="#" class="hover:text-orange-400 transition-colors">Privacy Policy</a></li>
+            <li><a href="#" class="hover:text-orange-400 transition-colors">Terms of Service</a></li>
+          </ul>
+        </div>
+
+      </div>
+
+      <div class="pt-8 border-t border-gray-700 flex flex-col md:flex-row items-center justify-between gap-4 text-sm text-gray-500">
+        <p>&copy; 2026 HomeBite Inc. All rights reserved.</p>
+        <div class="flex items-center gap-6">
+          <a href="#" class="hover:text-orange-400 transition-colors">Twitter</a>
+          <a href="#" class="hover:text-orange-400 transition-colors">Instagram</a>
+          <a href="#" class="hover:text-orange-400 transition-colors">Facebook</a>
+        </div>
+      </div>
+
+    </div>
+  </footer>
+
+  <script>
+    function toggleMenu() {
+      const menu = document.getElementById('mobile-menu');
+      const iconOpen = document.getElementById('icon-open');
+      const iconClose = document.getElementById('icon-close');
+      const isOpen = menu.classList.contains('open');
+      if (isOpen) {
+        menu.classList.remove('open');
+        iconOpen.classList.remove('hidden');
+        iconClose.classList.add('hidden');
+      } else {
+        menu.classList.add('open');
+        iconOpen.classList.add('hidden');
+        iconClose.classList.remove('hidden');
+      }
+    }
+
+    function closeMenu() {
+      const menu = document.getElementById('mobile-menu');
+      const iconOpen = document.getElementById('icon-open');
+      const iconClose = document.getElementById('icon-close');
+      menu.classList.remove('open');
+      iconOpen.classList.remove('hidden');
+      iconClose.classList.add('hidden');
+    }
+  </script>
+
+</body>
+</html>
+
+        
