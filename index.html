@@ -182,19 +182,29 @@
 
         <!-- Search + CTA -->
         <div class="flex flex-col sm:flex-row items-center justify-center gap-3 w-full max-w-md mx-auto">
+          <!-- Local Storage API -->
           <div class="relative w-full">
             <svg xmlns="http://www.w3.org/2000/svg" class="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-stone-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
               <path stroke-linecap="round" stroke-linejoin="round" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/>
               <path stroke-linecap="round" stroke-linejoin="round" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/>
             </svg>
             <input
+              id="zip-code"
               type="text"
               placeholder="Enter your zip code..."
               class="w-full h-14 pl-12 pr-4 rounded-full border border-stone-200 bg-white text-gray-900 shadow-sm focus:outline-none focus:ring-2 focus:ring-orange-300 focus:border-orange-400 transition"
             />
           </div>
-          <button class="btn-primary w-full sm:w-auto h-14 px-8 text-base shrink-0">
+          <!-- Geolocation API -->
+          <button id="find-food-btn" class="btn-primary w-full sm:w-auto h-14 px-8 text-base shrink-0">
             Find Food Near You
+          </button>
+        </div>
+        <p id="location-output" class="mt-4 text-sm text-stone-500 min-h-[1.25rem]"></p>
+        <!-- Notification API -->
+        <div class="mt-5">
+          <button id="enable-notifications-btn" class="btn-outline w-full sm:w-auto">
+            Enable Notifications
           </button>
         </div>
 
@@ -261,10 +271,11 @@
           <button class="btn-outline hidden md:inline-flex">View All Meals</button>
         </div>
 
-        <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
+        <!-- Drag and Drop API -->
+        <div id="meals-grid" class="grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
 
           <!-- Meal 1 -->
-          <article class="meal-card rounded-2xl bg-stone-50 border border-stone-100 overflow-hidden cursor-pointer">
+          <article class="meal-card rounded-2xl bg-stone-50 border border-stone-100 overflow-hidden cursor-pointer" draggable="true">
             <div class="relative h-64 overflow-hidden">
               <img src="https://images.unsplash.com/photo-1563379091339-03246963d264?auto=format&fit=crop&w=600&q=80" alt="Authentic Chicken Biryani" class="w-full h-full object-cover" loading="lazy" />
               <span class="badge absolute top-4 right-4">Indian</span>
@@ -285,7 +296,7 @@
           </article>
 
           <!-- Meal 2 -->
-          <article class="meal-card rounded-2xl bg-stone-50 border border-stone-100 overflow-hidden cursor-pointer">
+          <article class="meal-card rounded-2xl bg-stone-50 border border-stone-100 overflow-hidden cursor-pointer" draggable="true">
             <div class="relative h-64 overflow-hidden">
               <img src="https://images.unsplash.com/photo-1621996346565-e3dbc646d9a9?auto=format&fit=crop&w=600&q=80" alt="Handmade Tagliatelle" class="w-full h-full object-cover" loading="lazy" />
               <span class="badge absolute top-4 right-4">Italian</span>
@@ -306,7 +317,7 @@
           </article>
 
           <!-- Meal 3 -->
-          <article class="meal-card rounded-2xl bg-stone-50 border border-stone-100 overflow-hidden cursor-pointer">
+          <article class="meal-card rounded-2xl bg-stone-50 border border-stone-100 overflow-hidden cursor-pointer" draggable="true">
             <div class="relative h-64 overflow-hidden">
               <img src="https://images.unsplash.com/photo-1455619452474-d2be8b1e70cd?auto=format&fit=crop&w=600&q=80" alt="Vegan Thai Green Curry" class="w-full h-full object-cover" loading="lazy" />
               <span class="badge absolute top-4 right-4">Thai</span>
@@ -327,7 +338,7 @@
           </article>
 
           <!-- Meal 4 -->
-          <article class="meal-card rounded-2xl bg-stone-50 border border-stone-100 overflow-hidden cursor-pointer">
+          <article class="meal-card rounded-2xl bg-stone-50 border border-stone-100 overflow-hidden cursor-pointer" draggable="true">
             <div class="relative h-64 overflow-hidden">
               <img src="https://images.unsplash.com/photo-1565299585323-38d6b0865b47?auto=format&fit=crop&w=600&q=80" alt="Street-Style Beef Tacos" class="w-full h-full object-cover" loading="lazy" />
               <span class="badge absolute top-4 right-4">Mexican</span>
@@ -348,7 +359,7 @@
           </article>
 
            <!-- Meal 5 -->
-          <article class="meal-card rounded-2xl bg-stone-50 border border-stone-100 overflow-hidden cursor-pointer">
+          <article class="meal-card rounded-2xl bg-stone-50 border border-stone-100 overflow-hidden cursor-pointer" draggable="true">
             <div class="relative h-64 overflow-hidden">
               <img src="https://images.unsplash.com/photo-1617196034183-421b4040ed20?auto=format&fit=crop&w=600&q=80" alt="Korean BBQ Beef Bowl" class="w-full h-full object-cover" loading="lazy" />
               <span class="badge absolute top-4 right-4">Korean</span>
@@ -369,7 +380,7 @@
           </article>
 
           <!-- Meal 6 -->
-          <article class="meal-card rounded-2xl bg-stone-50 border border-stone-100 overflow-hidden cursor-pointer">
+          <article class="meal-card rounded-2xl bg-stone-50 border border-stone-100 overflow-hidden cursor-pointer" draggable="true">
             <div class="relative h-64 overflow-hidden">
               <img src="https://images.unsplash.com/photo-1574484284002-952d92456975?auto=format&fit=crop&w=600&q=80" alt="Slow-Cooked Lamb Tagine" class="w-full h-full object-cover" loading="lazy" />
               <span class="badge absolute top-4 right-4">Moroccan</span>
@@ -535,6 +546,8 @@
           <a href="#" class="hover:text-orange-400 transition-colors">Twitter</a>
           <a href="#" class="hover:text-orange-400 transition-colors">Instagram</a>
           <a href="#" class="hover:text-orange-400 transition-colors">Facebook</a>
+          <!-- Clipboard API -->
+          <button id="copy-link-btn" class="hover:text-orange-400 transition-colors">Copy Website Link</button>
         </div>
       </div>
 
@@ -566,6 +579,112 @@
       iconOpen.classList.remove('hidden');
       iconClose.classList.add('hidden');
     }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      const zipCodeInput = document.getElementById('zip-code');
+      const findFoodButton = document.getElementById('find-food-btn');
+      const locationOutput = document.getElementById('location-output');
+      const enableNotificationsButton = document.getElementById('enable-notifications-btn');
+      const copyLinkButton = document.getElementById('copy-link-btn');
+      const mealsGrid = document.getElementById('meals-grid');
+      const mealCards = mealsGrid ? Array.from(mealsGrid.querySelectorAll('.meal-card')) : [];
+      let draggedCard = null;
+
+      // Local Storage API
+      const savedZipCode = localStorage.getItem('homebiteZipCode');
+      if (savedZipCode) {
+        zipCodeInput.value = savedZipCode;
+      }
+
+      zipCodeInput.addEventListener('input', (event) => {
+        localStorage.setItem('homebiteZipCode', event.target.value);
+      });
+
+      // Geolocation API
+      findFoodButton.addEventListener('click', () => {
+        if (!navigator.geolocation) {
+          alert('Geolocation is not supported by your browser.');
+          return;
+        }
+
+        navigator.geolocation.getCurrentPosition(
+          (position) => {
+            const { latitude, longitude } = position.coords;
+            const message = `Latitude: ${latitude.toFixed(6)}, Longitude: ${longitude.toFixed(6)}`;
+            locationOutput.textContent = message;
+            alert(message);
+          },
+          () => {
+            locationOutput.textContent = 'Unable to retrieve your location.';
+            alert('Unable to retrieve your location.');
+          }
+        );
+      });
+
+      // Clipboard API
+      copyLinkButton.addEventListener('click', async () => {
+        try {
+          await navigator.clipboard.writeText(window.location.href);
+          alert('Website link copied to clipboard!');
+        } catch (error) {
+          alert('Unable to copy the website link.');
+        }
+      });
+
+      // Notification API
+      enableNotificationsButton.addEventListener('click', async () => {
+        if (!('Notification' in window)) {
+          alert('Notifications are not supported by your browser.');
+          return;
+        }
+
+        const permission = await Notification.requestPermission();
+        if (permission === 'granted') {
+          new Notification('New homemade meals available near you!');
+        } else {
+          alert('Notification permission was not granted.');
+        }
+      });
+
+      // Drag and Drop API
+      mealCards.forEach((card) => {
+        card.addEventListener('dragstart', (event) => {
+          draggedCard = card;
+          event.dataTransfer.effectAllowed = 'move';
+          event.dataTransfer.setData('text/plain', card.querySelector('h3')?.textContent || 'meal-card');
+          card.classList.add('opacity-70');
+        });
+
+        card.addEventListener('dragend', () => {
+          card.classList.remove('opacity-70');
+          draggedCard = null;
+        });
+
+        card.addEventListener('dragover', (event) => {
+          event.preventDefault();
+          event.dataTransfer.dropEffect = 'move';
+        });
+
+        card.addEventListener('drop', (event) => {
+          event.preventDefault();
+          if (!draggedCard || draggedCard === card) {
+            return;
+          }
+
+          const draggedRect = draggedCard.getBoundingClientRect();
+          const targetRect = card.getBoundingClientRect();
+          const shouldInsertAfter =
+            draggedRect.top < targetRect.top ||
+            (Math.abs(draggedRect.top - targetRect.top) < 1 && draggedRect.left < targetRect.left);
+
+          if (shouldInsertAfter) {
+            card.after(draggedCard);
+          } else {
+            card.before(draggedCard);
+          }
+        });
+      });
+    });
   </script>
 
 </body>
