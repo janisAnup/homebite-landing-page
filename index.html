@@ -277,7 +277,7 @@
           <!-- Meal 1 -->
           <article class="meal-card rounded-2xl bg-stone-50 border border-stone-100 overflow-hidden cursor-pointer" draggable="true">
             <div class="relative h-64 overflow-hidden">
-              <img src="https://images.unsplash.com/photo-1563379091339-03246963d264?auto=format&fit=crop&w=600&q=80" alt="Authentic Chicken Biryani" class="w-full h-full object-cover" loading="lazy" />
+              <img src="https://images.unsplash.com/photo-1563379091339-03246963d264?auto=format&fit=crop&w=600&q=80" alt="Authentic Chicken Biryani" data-fallback-label="Authentic Chicken Biryani" class="w-full h-full object-cover" loading="lazy" />
               <span class="badge absolute top-4 right-4">Indian</span>
             </div>
             <div class="p-6">
@@ -298,7 +298,7 @@
           <!-- Meal 2 -->
           <article class="meal-card rounded-2xl bg-stone-50 border border-stone-100 overflow-hidden cursor-pointer" draggable="true">
             <div class="relative h-64 overflow-hidden">
-              <img src="https://images.unsplash.com/photo-1621996346565-e3dbc646d9a9?auto=format&fit=crop&w=600&q=80" alt="Handmade Tagliatelle" class="w-full h-full object-cover" loading="lazy" />
+              <img src="https://images.unsplash.com/photo-1621996346565-e3dbc646d9a9?auto=format&fit=crop&w=600&q=80" alt="Handmade Tagliatelle" data-fallback-label="Handmade Tagliatelle" class="w-full h-full object-cover" loading="lazy" />
               <span class="badge absolute top-4 right-4">Italian</span>
             </div>
             <div class="p-6">
@@ -319,7 +319,7 @@
           <!-- Meal 3 -->
           <article class="meal-card rounded-2xl bg-stone-50 border border-stone-100 overflow-hidden cursor-pointer" draggable="true">
             <div class="relative h-64 overflow-hidden">
-              <img src="https://images.unsplash.com/photo-1455619452474-d2be8b1e70cd?auto=format&fit=crop&w=600&q=80" alt="Vegan Thai Green Curry" class="w-full h-full object-cover" loading="lazy" />
+              <img src="https://images.unsplash.com/photo-1455619452474-d2be8b1e70cd?auto=format&fit=crop&w=600&q=80" alt="Vegan Thai Green Curry" data-fallback-label="Vegan Thai Green Curry" class="w-full h-full object-cover" loading="lazy" />
               <span class="badge absolute top-4 right-4">Thai</span>
             </div>
             <div class="p-6">
@@ -340,7 +340,7 @@
           <!-- Meal 4 -->
           <article class="meal-card rounded-2xl bg-stone-50 border border-stone-100 overflow-hidden cursor-pointer" draggable="true">
             <div class="relative h-64 overflow-hidden">
-              <img src="https://images.unsplash.com/photo-1565299585323-38d6b0865b47?auto=format&fit=crop&w=600&q=80" alt="Street-Style Beef Tacos" class="w-full h-full object-cover" loading="lazy" />
+              <img src="https://images.unsplash.com/photo-1565299585323-38d6b0865b47?auto=format&fit=crop&w=600&q=80" alt="Street-Style Beef Tacos" data-fallback-label="Street-Style Beef Tacos" class="w-full h-full object-cover" loading="lazy" />
               <span class="badge absolute top-4 right-4">Mexican</span>
             </div>
             <div class="p-6">
@@ -361,7 +361,7 @@
            <!-- Meal 5 -->
           <article class="meal-card rounded-2xl bg-stone-50 border border-stone-100 overflow-hidden cursor-pointer" draggable="true">
             <div class="relative h-64 overflow-hidden">
-              <img src="https://images.unsplash.com/photo-1617196034183-421b4040ed20?auto=format&fit=crop&w=600&q=80" alt="Korean BBQ Beef Bowl" class="w-full h-full object-cover" loading="lazy" />
+              <img src="https://images.unsplash.com/photo-1617196034183-421b4040ed20?auto=format&fit=crop&w=600&q=80" alt="Korean BBQ Beef Bowl" data-fallback-label="Korean BBQ Beef Bowl" class="w-full h-full object-cover" loading="lazy" />
               <span class="badge absolute top-4 right-4">Korean</span>
             </div>
             <div class="p-6">
@@ -382,7 +382,7 @@
           <!-- Meal 6 -->
           <article class="meal-card rounded-2xl bg-stone-50 border border-stone-100 overflow-hidden cursor-pointer" draggable="true">
             <div class="relative h-64 overflow-hidden">
-              <img src="https://images.unsplash.com/photo-1574484284002-952d92456975?auto=format&fit=crop&w=600&q=80" alt="Slow-Cooked Lamb Tagine" class="w-full h-full object-cover" loading="lazy" />
+              <img src="https://images.unsplash.com/photo-1574484284002-952d92456975?auto=format&fit=crop&w=600&q=80" alt="Slow-Cooked Lamb Tagine" data-fallback-label="Slow-Cooked Lamb Tagine" class="w-full h-full object-cover" loading="lazy" />
               <span class="badge absolute top-4 right-4">Moroccan</span>
             </div>
             <div class="p-6">
@@ -588,7 +588,40 @@
       const copyLinkButton = document.getElementById('copy-link-btn');
       const mealsGrid = document.getElementById('meals-grid');
       const mealCards = mealsGrid ? Array.from(mealsGrid.querySelectorAll('.meal-card')) : [];
+      const fallbackImages = document.querySelectorAll('img[data-fallback-label]');
       let draggedCard = null;
+
+      function buildFallbackImage(label) {
+        const svg = `
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 400">
+            <defs>
+              <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stop-color="#FED7AA" />
+                <stop offset="100%" stop-color="#F97316" />
+              </linearGradient>
+            </defs>
+            <rect width="600" height="400" fill="url(#bg)" />
+            <circle cx="510" cy="85" r="72" fill="rgba(255,255,255,0.18)" />
+            <circle cx="85" cy="320" r="92" fill="rgba(255,255,255,0.12)" />
+            <text x="50%" y="48%" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="24" font-weight="700" fill="#1c1410">HomeBite</text>
+            <text x="50%" y="60%" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="18" fill="#1c1410">${label}</text>
+          </svg>
+        `;
+
+        return `data:image/svg+xml;charset=UTF-8,${encodeURIComponent(svg)}`;
+      }
+
+      fallbackImages.forEach((image) => {
+        const applyFallback = () => {
+          image.src = buildFallbackImage(image.dataset.fallbackLabel || image.alt || 'Meal');
+        };
+
+        image.addEventListener('error', applyFallback, { once: true });
+
+        if (image.complete && image.naturalWidth === 0) {
+          applyFallback();
+        }
+      });
 
       // Local Storage API
       const savedZipCode = localStorage.getItem('homebiteZipCode');
