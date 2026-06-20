@@ -209,6 +209,7 @@
         <a href="#how-it-works" class="text-sm font-medium text-stone-500 hover:text-orange-500 transition-colors">How it Works</a>
         <a href="#popular-meals" class="text-sm font-medium text-stone-500 hover:text-orange-500 transition-colors">Popular Meals</a>
         <a href="#testimonials" class="text-sm font-medium text-stone-500 hover:text-orange-500 transition-colors">Testimonials</a>
+        <a href="smart-meal-match.html" class="text-sm font-medium text-stone-500 hover:text-orange-500 transition-colors">Smart Match</a>
       </nav>
 
       <!-- Desktop Actions -->
@@ -274,6 +275,13 @@
         class="block text-base font-medium px-3 py-2 rounded-lg hover:bg-orange-50 hover:text-orange-500 transition-colors"
       >
         Testimonials
+      </a>
+      <a
+        href="smart-meal-match.html"
+        onclick="closeMenu()"
+        class="block text-base font-medium px-3 py-2 rounded-lg hover:bg-orange-50 hover:text-orange-500 transition-colors"
+      >
+        Smart Match
       </a>
       <div class="pt-3 border-t border-stone-100 flex flex-col gap-2">
         <button class="btn-outline w-full">Log in</button>
@@ -353,6 +361,12 @@
           <button id="enable-notifications-btn" class="btn-outline w-full sm:w-auto">
             Enable Notifications
           </button>
+        </div>
+
+        <div class="mt-4">
+          <a href="smart-meal-match.html" class="btn-primary w-full sm:w-auto">
+            Open Smart Meal Match Finder
+          </a>
         </div>
       </div>
     </section>
@@ -446,7 +460,7 @@
               <h3 class="text-xl font-bold text-gray-900 mb-1 truncate">Authentic Chicken Biryani</h3>
               <p class="text-stone-500 text-sm mb-4">By Chef Aisha M.</p>
               <div class="flex items-center justify-between">
-                <span class="font-serif text-xl font-bold text-gray-900">$16.50</span>
+                <span class="font-serif text-xl font-bold text-gray-900">₹1,556</span>
                 <div class="flex items-center gap-1 bg-orange-50 px-2.5 py-1 rounded-lg">
                   <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 24 24" fill="#F97316" stroke="#F97316" stroke-width="1">
                     <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
@@ -473,7 +487,7 @@
               <h3 class="text-xl font-bold text-gray-900 mb-1 truncate">Handmade Tagliatelle</h3>
               <p class="text-stone-500 text-sm mb-4">By Chef Marco V.</p>
               <div class="flex items-center justify-between">
-                <span class="font-serif text-xl font-bold text-gray-900">$18.00</span>
+                <span class="font-serif text-xl font-bold text-gray-900">₹1,698</span>
                 <div class="flex items-center gap-1 bg-orange-50 px-2.5 py-1 rounded-lg">
                   <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 24 24" fill="#F97316" stroke="#F97316" stroke-width="1">
                     <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
@@ -500,7 +514,7 @@
               <h3 class="text-xl font-bold text-gray-900 mb-1 truncate">Vegan Thai Green Curry</h3>
               <p class="text-stone-500 text-sm mb-4">By Chef Ploy S.</p>
               <div class="flex items-center justify-between">
-                <span class="font-serif text-xl font-bold text-gray-900">$15.00</span>
+                <span class="font-serif text-xl font-bold text-gray-900">₹1,415</span>
                 <div class="flex items-center gap-1 bg-orange-50 px-2.5 py-1 rounded-lg">
                   <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 24 24" fill="#F97316" stroke="#F97316" stroke-width="1">
                     <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
@@ -527,7 +541,7 @@
               <h3 class="text-xl font-bold text-gray-900 mb-1 truncate">Street-Style Beef Tacos</h3>
               <p class="text-stone-500 text-sm mb-4">By Chef Carlos R.</p>
               <div class="flex items-center justify-between">
-                <span class="font-serif text-xl font-bold text-gray-900">$12.00</span>
+                <span class="font-serif text-xl font-bold text-gray-900">₹1,132</span>
                 <div class="flex items-center gap-1 bg-orange-50 px-2.5 py-1 rounded-lg">
                   <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 24 24" fill="#F97316" stroke="#F97316" stroke-width="1">
                     <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
@@ -554,7 +568,7 @@
               <h3 class="text-xl font-bold text-gray-900 mb-1 truncate">Korean BBQ Beef Bowl</h3>
               <p class="text-stone-500 text-sm mb-4">By Chef Min-ji K.</p>
               <div class="flex items-center justify-between">
-                <span class="font-serif text-xl font-bold text-gray-900">$17.50</span>
+                <span class="font-serif text-xl font-bold text-gray-900">₹1,651</span>
                 <div class="flex items-center gap-1 bg-orange-50 px-2.5 py-1 rounded-lg">
                   <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 24 24" fill="#F97316" stroke="#F97316" stroke-width="1">
                     <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
@@ -581,7 +595,7 @@
               <h3 class="text-xl font-bold text-gray-900 mb-1 truncate">Slow-Cooked Lamb Tagine</h3>
               <p class="text-stone-500 text-sm mb-4">By Chef Fatima B.</p>
               <div class="flex items-center justify-between">
-                <span class="font-serif text-xl font-bold text-gray-900">$21.00</span>
+                <span class="font-serif text-xl font-bold text-gray-900">₹1,981</span>
                 <div class="flex items-center gap-1 bg-orange-50 px-2.5 py-1 rounded-lg">
                   <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 24 24" fill="#F97316" stroke="#F97316" stroke-width="1">
                     <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />

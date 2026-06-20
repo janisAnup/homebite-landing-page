@@ -1,0 +1,1233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>HomeBite | Smart Meal Match Finder</title>
+  <meta
+    name="description"
+    content="Use HomeBite's Smart Meal Match Finder to discover homemade meals based on budget, diet, and meal type."
+  />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,700&family=Inter:wght@400;500;600;700&display=swap"
+    rel="stylesheet"
+  />
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            primary: {
+              DEFAULT: '#F97316',
+              light: '#FED7AA',
+              dark: '#EA580C',
+            },
+            card: '#FAFAF8',
+          },
+          fontFamily: {
+            serif: ['"Playfair Display"', 'Georgia', 'serif'],
+            sans: ['Inter', 'system-ui', 'sans-serif'],
+          },
+        },
+      },
+    };
+  </script>
+
+  <style>
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: 'Inter', system-ui, sans-serif;
+    }
+
+    .font-serif {
+      font-family: 'Playfair Display', Georgia, serif;
+    }
+
+    .section-title {
+      font-family: 'Playfair Display', serif;
+      font-weight: 700;
+      color: #1c1410;
+    }
+
+    .hero-gradient {
+      background: radial-gradient(
+        ellipse at 80% 0%,
+        rgba(249, 115, 22, 0.12) 0%,
+        transparent 65%
+      );
+    }
+
+    .btn-primary,
+    .btn-outline,
+    .btn-ghost {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 9999px;
+      cursor: pointer;
+    }
+
+    .btn-primary {
+      background-color: #F97316;
+      color: #fff;
+      padding: 0.75rem 1.75rem;
+      font-weight: 600;
+      font-size: 0.95rem;
+      transition: background-color 0.2s, box-shadow 0.2s;
+      box-shadow: 0 4px 14px rgba(249, 115, 22, 0.35);
+      border: none;
+    }
+
+    .btn-primary:hover {
+      background-color: #EA580C;
+      box-shadow: 0 6px 20px rgba(249, 115, 22, 0.45);
+    }
+
+    .btn-outline {
+      background-color: transparent;
+      color: #1c1410;
+      padding: 0.75rem 1.75rem;
+      font-weight: 600;
+      font-size: 0.95rem;
+      border: 1.5px solid #e0d6ce;
+      transition: background-color 0.2s, border-color 0.2s, color 0.2s;
+    }
+
+    .btn-outline:hover {
+      background-color: #fff4ed;
+      border-color: #F97316;
+      color: #F97316;
+    }
+
+    .btn-ghost {
+      background-color: transparent;
+      color: #1c1410;
+      padding: 0.75rem 1.25rem;
+      font-weight: 500;
+      font-size: 0.95rem;
+      border: none;
+      transition: background-color 0.2s, color 0.2s;
+    }
+
+    .btn-ghost:hover {
+      background-color: #fff4ed;
+      color: #F97316;
+    }
+
+    .meal-card {
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .meal-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.12);
+    }
+  </style>
+</head>
+<body class="bg-stone-50 text-gray-900 antialiased">
+  <header class="sticky top-0 z-50 w-full border-b border-stone-100 bg-white/95 backdrop-blur-sm">
+    <div class="max-w-6xl mx-auto px-4 md:px-6 h-16 flex items-center justify-between gap-4">
+      <a href="index.html" class="flex items-center gap-2 shrink-0">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          class="h-6 w-6 text-primary"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+          stroke-width="2"
+          style="color: #F97316;"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            d="M17 8C8 10 5.9 16.17 3.82 19.92M9 3H5a2 2 0 00-2 2v4h6V3zm8 0h-4v6h6V5a2 2 0 00-2-2zm-5 14a4 4 0 01-8 0"
+          />
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            d="M12 2a1 1 0 011 1v3h-2V3a1 1 0 011-1z"
+          />
+        </svg>
+        <span class="font-serif text-2xl font-bold tracking-tight text-gray-900">HomeBite</span>
+      </a>
+
+      <div class="flex items-center gap-2 sm:gap-3">
+        <a href="index.html#popular-meals" class="btn-ghost hidden sm:inline-flex">Popular Meals</a>
+        <a href="index.html" class="btn-outline">Back to Home</a>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section class="relative overflow-hidden hero-gradient pt-16 pb-12 md:pt-24 md:pb-16">
+      <div class="max-w-6xl mx-auto px-4 md:px-6">
+        <div class="max-w-3xl">
+          <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-orange-50 text-orange-500 text-sm font-medium mb-6 border border-orange-100">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="h-4 w-4"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              stroke-width="2"
+            >
+              <path stroke-linecap="round" stroke-linejoin="round" d="M12 8c-1.657 0-3 1.12-3 2.5S10.343 13 12 13s3 1.12 3 2.5S13.657 18 12 18m0-10V6m0 12v-2m8-4a8 8 0 11-16 0 8 8 0 0116 0z" />
+            </svg>
+            <span>Dedicated meal planning page for quick homemade choices</span>
+          </div>
+
+          <h1 class="font-serif text-4xl md:text-6xl font-bold text-gray-900 leading-tight tracking-tight mb-5">
+            Smart Meal Match <span class="text-orange-500 italic">Finder</span>
+          </h1>
+
+          <p class="text-lg md:text-xl text-stone-500 leading-relaxed max-w-2xl">
+            Pick your budget, dietary preference, and meal type to discover homemade meals that fit your day. This page keeps the full feature separate from the landing page while staying fully in the HomeBite style.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section class="pb-20">
+      <div class="max-w-6xl mx-auto px-4 md:px-6">
+        <div class="grid lg:grid-cols-[1.1fr_0.9fr] gap-8 items-start">
+          <article class="bg-white rounded-3xl p-6 md:p-8 shadow-sm border border-stone-100">
+            <header class="mb-6">
+              <h2 class="text-2xl font-bold text-gray-900 mb-2">Find a meal that actually suits you</h2>
+              <p class="text-stone-500 leading-relaxed">
+                Students, office-goers, and families often know their budget before they know what to eat. This form filters HomeBite meal options instantly and remembers preferences on the same device.
+              </p>
+            </header>
+
+            <form id="meal-match-form" novalidate class="space-y-6">
+              <div>
+                <label for="meal-match-zip" class="block text-sm font-semibold text-gray-900 mb-2">Nearby zip code (optional)</label>
+                <input
+                  id="meal-match-zip"
+                  name="zipCode"
+                  type="text"
+                  inputmode="numeric"
+                  maxlength="10"
+                  autocomplete="postal-code"
+                  placeholder="Use your HomeBite zip code"
+                  class="w-full rounded-2xl border border-stone-200 bg-stone-50 px-4 py-3 text-gray-900 shadow-sm focus:outline-none focus:ring-2 focus:ring-orange-300 focus:border-orange-400 transition"
+                />
+                <p class="mt-2 text-sm text-stone-500">
+                  This field is optional. If you already entered a zip code on the landing page, it will appear here automatically.
+                </p>
+              </div>
+
+              <div>
+                <label for="budget-input" class="block text-sm font-semibold text-gray-900 mb-2">Maximum budget (INR)</label>
+                <div class="flex flex-col md:flex-row md:items-center gap-4">
+                  <div class="flex-1">
+                    <input
+                      id="budget-input"
+                      name="budget"
+                      type="number"
+                      inputmode="numeric"
+                      min="755"
+                      max="2830"
+                      step="1"
+                      list="budget-suggestions"
+                      placeholder="Enter your maximum budget in rupees"
+                      required
+                      class="w-full rounded-2xl border border-stone-200 bg-stone-50 px-4 py-3 text-gray-900 shadow-sm focus:outline-none focus:ring-2 focus:ring-orange-300 focus:border-orange-400 transition"
+                    />
+                    <datalist id="budget-suggestions">
+                      <option value="950"></option>
+                      <option value="1150"></option>
+                      <option value="1400"></option>
+                      <option value="1700"></option>
+                      <option value="1900"></option>
+                    </datalist>
+                    <p class="mt-2 text-sm text-stone-500">
+                      Enter a whole number between &#8377;755 and &#8377;2,830. Suggested INR values make the form quicker to use.
+                    </p>
+                  </div>
+
+                  <div class="rounded-2xl bg-orange-50 border border-orange-100 px-4 py-3 md:min-w-[9rem]">
+                    <p class="text-xs font-semibold uppercase tracking-widest text-stone-400">Budget cap</p>
+                    <output id="budget-output" for="budget-input" class="mt-1 block font-serif text-3xl font-bold text-gray-900">
+                      Not set
+                    </output>
+                  </div>
+                </div>
+              </div>
+
+              <fieldset>
+                <legend class="block text-sm font-semibold text-gray-900 mb-3">Dietary preference</legend>
+                <div class="grid sm:grid-cols-3 gap-3">
+                  <label class="flex items-center gap-3 rounded-2xl border border-stone-200 bg-stone-50 px-4 py-3 cursor-pointer transition hover:border-orange-300 hover:bg-orange-50">
+                    <input
+                      type="radio"
+                      name="dietaryPreference"
+                      value="Veg"
+                      required
+                      class="h-4 w-4 text-orange-500 focus:ring-orange-300"
+                    />
+                    <span class="font-medium text-gray-900">Veg</span>
+                  </label>
+
+                  <label class="flex items-center gap-3 rounded-2xl border border-stone-200 bg-stone-50 px-4 py-3 cursor-pointer transition hover:border-orange-300 hover:bg-orange-50">
+                    <input
+                      type="radio"
+                      name="dietaryPreference"
+                      value="Non-Veg"
+                      required
+                      class="h-4 w-4 text-orange-500 focus:ring-orange-300"
+                    />
+                    <span class="font-medium text-gray-900">Non-Veg</span>
+                  </label>
+
+                  <label class="flex items-center gap-3 rounded-2xl border border-stone-200 bg-stone-50 px-4 py-3 cursor-pointer transition hover:border-orange-300 hover:bg-orange-50">
+                    <input
+                      type="radio"
+                      name="dietaryPreference"
+                      value="Vegan"
+                      required
+                      class="h-4 w-4 text-orange-500 focus:ring-orange-300"
+                    />
+                    <span class="font-medium text-gray-900">Vegan</span>
+                  </label>
+                </div>
+              </fieldset>
+
+              <div>
+                <label for="meal-type" class="block text-sm font-semibold text-gray-900 mb-2">Meal type</label>
+                <select
+                  id="meal-type"
+                  name="mealType"
+                  required
+                  class="w-full rounded-2xl border border-stone-200 bg-stone-50 px-4 py-3 text-gray-900 shadow-sm focus:outline-none focus:ring-2 focus:ring-orange-300 focus:border-orange-400 transition"
+                >
+                  <option value="">Select a meal type</option>
+                  <option value="Breakfast">Breakfast</option>
+                  <option value="Lunch">Lunch</option>
+                  <option value="Dinner">Dinner</option>
+                </select>
+              </div>
+
+              <p id="meal-match-feedback" class="min-h-[1.25rem] text-sm text-stone-500" aria-live="polite">
+                Your meal finder choices will be saved on this device for your next visit.
+              </p>
+
+              <div class="flex flex-col sm:flex-row gap-3">
+                <button type="submit" class="btn-primary w-full sm:w-auto">Find My Meal Match</button>
+                <button id="clear-match-btn" type="button" class="btn-outline w-full sm:w-auto">Clear Saved Preferences</button>
+              </div>
+            </form>
+          </article>
+
+          <aside class="rounded-3xl bg-orange-50 border border-orange-100 p-6 md:p-8">
+            <h2 class="text-2xl font-bold text-gray-900 mb-4">How the page helps</h2>
+            <div class="space-y-4 text-stone-600 leading-relaxed">
+              <p>
+                Instead of browsing every dish manually, this page uses conditional logic to filter a meal list based on your form selections.
+              </p>
+              <p>
+                If nothing fits your exact budget, the page still helps by showing the closest available homemade options instead of leaving the user stuck.
+              </p>
+              <p>
+                The layout stays responsive, the validation is browser-friendly, and the result cards are created dynamically using JavaScript.
+              </p>
+            </div>
+
+            <div class="mt-8 grid gap-4">
+              <div class="rounded-2xl bg-white/90 border border-white px-5 py-4">
+                <p class="text-xs font-semibold uppercase tracking-widest text-stone-400 mb-2">Saved preference</p>
+                <p id="saved-preference-note" class="text-sm text-gray-900 leading-relaxed" aria-live="polite">
+                  No saved meal preference yet. Search once and HomeBite will remember it here.
+                </p>
+              </div>
+
+              <div class="rounded-2xl bg-white/90 border border-white px-5 py-4">
+                <p class="text-xs font-semibold uppercase tracking-widest text-stone-400 mb-2">Nearby context</p>
+                <p id="meal-match-location-tip" class="text-sm text-gray-900 leading-relaxed">
+                  Add a zip code to make your meal summary feel more local.
+                </p>
+              </div>
+
+              <div class="rounded-2xl bg-white/90 border border-white px-5 py-4">
+                <p class="text-xs font-semibold uppercase tracking-widest text-stone-400 mb-2">Assessment concepts</p>
+                <p class="text-sm text-gray-900 leading-relaxed">
+                  HTML5 form inputs, <code class="font-mono text-[0.95em]">datalist</code>, <code class="font-mono text-[0.95em]">output</code>, validation, DOM updates, conditional rendering, <code class="font-mono text-[0.95em]">localStorage</code>, the Clipboard API, and browser print support all work together in this module.
+                </p>
+              </div>
+            </div>
+          </aside>
+        </div>
+
+        <section
+          class="mt-8 rounded-3xl bg-white border border-stone-100 shadow-sm p-6 md:p-8"
+          aria-labelledby="meal-match-results-title"
+        >
+          <div class="flex flex-col md:flex-row md:items-start md:justify-between gap-4">
+            <div>
+              <h2 id="meal-match-results-title" class="text-2xl font-bold text-gray-900 mb-2">Recommended homemade meals</h2>
+              <p id="meal-match-summary" class="text-stone-500 max-w-2xl" aria-live="polite">
+                Complete the form to see meal recommendations generated just for this search.
+              </p>
+            </div>
+
+            <div class="flex flex-col sm:flex-row gap-3 md:items-center">
+              <span
+                id="meal-match-status"
+                class="inline-flex items-center justify-center rounded-full bg-stone-50 border border-stone-200 px-3.5 py-1.5 text-xs font-semibold text-stone-500"
+              >
+                Ready to match
+              </span>
+
+              <button
+                id="copy-summary-btn"
+                type="button"
+                class="btn-outline disabled:opacity-50 disabled:cursor-not-allowed"
+                disabled
+              >
+                Copy Summary
+              </button>
+
+              <button
+                id="print-results-btn"
+                type="button"
+                class="btn-outline disabled:opacity-50 disabled:cursor-not-allowed"
+                disabled
+              >
+                Print Results
+              </button>
+            </div>
+          </div>
+
+          <div id="meal-match-results" class="mt-8 grid md:grid-cols-2 xl:grid-cols-3 gap-6">
+            <article class="rounded-2xl border border-dashed border-stone-200 bg-stone-50 p-6 md:col-span-2 xl:col-span-3">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">No meal search yet</h3>
+              <p class="text-stone-500 leading-relaxed">
+                Enter a budget, choose a dietary preference, and pick a meal type. HomeBite will generate matching homemade meal cards here.
+              </p>
+            </article>
+          </div>
+        </section>
+
+        <section
+          class="mt-8 rounded-3xl bg-white border border-stone-100 shadow-sm p-6 md:p-8"
+          aria-labelledby="recent-searches-title"
+        >
+          <div class="flex flex-col md:flex-row md:items-start md:justify-between gap-4">
+            <div>
+              <h2 id="recent-searches-title" class="text-2xl font-bold text-gray-900 mb-2">Recent searches</h2>
+              <p class="text-stone-500 max-w-2xl">
+                This section shows your latest meal searches, proving extra JavaScript work with arrays, local storage, and dynamic DOM rendering.
+              </p>
+            </div>
+            <span class="inline-flex items-center justify-center rounded-full bg-orange-50 border border-orange-100 px-3.5 py-1.5 text-xs font-semibold text-orange-600">
+              Assessment booster
+            </span>
+          </div>
+
+          <div id="search-history-container" class="mt-8 grid md:grid-cols-2 xl:grid-cols-3 gap-6">
+            <article class="rounded-2xl border border-dashed border-stone-200 bg-stone-50 p-6 md:col-span-2 xl:col-span-3">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">No recent searches yet</h3>
+              <p class="text-stone-500 leading-relaxed">
+                Once you run the finder, your latest meal searches will appear here with a quick button to reuse them.
+              </p>
+            </article>
+          </div>
+        </section>
+      </div>
+    </section>
+  </main>
+
+  <footer class="bg-gray-900 text-gray-100 py-10">
+    <div class="max-w-6xl mx-auto px-4 md:px-6 flex flex-col md:flex-row items-center justify-between gap-4 text-sm">
+      <p class="text-gray-400">&copy; 2026 HomeBite Inc. Smart choices for homemade food.</p>
+      <a href="index.html" class="hover:text-orange-400 transition-colors">Return to HomeBite</a>
+    </div>
+  </footer>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      /* ========================================
+         DOM References
+      ======================================== */
+      const mealMatchForm = document.getElementById('meal-match-form');
+      const zipCodeInput = document.getElementById('meal-match-zip');
+      const budgetInput = document.getElementById('budget-input');
+      const budgetOutput = document.getElementById('budget-output');
+      const mealTypeSelect = document.getElementById('meal-type');
+      const dietInputs = Array.from(document.querySelectorAll('input[name="dietaryPreference"]'));
+      const mealMatchFeedback = document.getElementById('meal-match-feedback');
+      const savedPreferenceNote = document.getElementById('saved-preference-note');
+      const mealMatchLocationTip = document.getElementById('meal-match-location-tip');
+      const mealMatchSummary = document.getElementById('meal-match-summary');
+      const mealMatchStatus = document.getElementById('meal-match-status');
+      const mealMatchResults = document.getElementById('meal-match-results');
+      const copySummaryButton = document.getElementById('copy-summary-btn');
+      const printResultsButton = document.getElementById('print-results-btn');
+      const searchHistoryContainer = document.getElementById('search-history-container');
+      const clearMatchButton = document.getElementById('clear-match-btn');
+      const ZIP_STORAGE_KEY = 'homebiteZipCode';
+      const MEAL_MATCH_STORAGE_KEY = 'homebiteMealMatchPreferences';
+      const SEARCH_HISTORY_STORAGE_KEY = 'homebiteMealMatchHistory';
+      const USD_TO_INR_RATE = 94.33;
+      const MIN_BUDGET_INR = Math.round(8 * USD_TO_INR_RATE);
+      const MAX_BUDGET_INR = Math.round(30 * USD_TO_INR_RATE);
+      const MAX_SEARCH_HISTORY = 5;
+      const inrFormatter = new Intl.NumberFormat('en-IN', {
+        style: 'currency',
+        currency: 'INR',
+        maximumFractionDigits: 0,
+      });
+      const smartMeals = [
+        {
+          name: 'Masala Oats Upma',
+          chef: 'Chef Renu P.',
+          price: 849,
+          diet: 'Veg',
+          mealType: 'Breakfast',
+          cuisine: 'South Indian',
+          description: 'A light homemade breakfast with vegetables, curry leaves, and roasted peanuts.',
+          readyBy: 'Ready by 7:30 AM',
+          distance: '1.2 km away',
+          highlight: 'Keeps breakfast simple, warm, and filling.',
+        },
+        {
+          name: 'Stuffed Aloo Paratha Platter',
+          chef: 'Chef Meera T.',
+          price: 1038,
+          diet: 'Veg',
+          mealType: 'Breakfast',
+          cuisine: 'North Indian',
+          description: 'Fresh parathas served with curd and pickle for a satisfying start.',
+          readyBy: 'Ready by 8:15 AM',
+          distance: '1.8 km away',
+          highlight: 'A filling option when you need a bigger breakfast.',
+        },
+        {
+          name: 'Paneer Tawa Rice Bowl',
+          chef: 'Chef Kavya S.',
+          price: 1321,
+          diet: 'Veg',
+          mealType: 'Lunch',
+          cuisine: 'North Indian',
+          description: 'Soft paneer, masala rice, and sauteed vegetables packed for a balanced lunch.',
+          readyBy: 'Ready by 12:30 PM',
+          distance: '2.1 km away',
+          highlight: 'Gives you a complete lunch without crossing mid-range budgets.',
+        },
+        {
+          name: 'Rajma Rice Comfort Box',
+          chef: 'Chef Naina A.',
+          price: 1273,
+          diet: 'Veg',
+          mealType: 'Dinner',
+          cuisine: 'Punjabi',
+          description: 'Slow-cooked rajma with jeera rice and salad on the side.',
+          readyBy: 'Ready by 7:15 PM',
+          distance: '1.4 km away',
+          highlight: 'Comfort food that stays easy on the wallet.',
+        },
+        {
+          name: 'Baked Veg Lasagna',
+          chef: 'Chef Rhea D.',
+          price: 1698,
+          diet: 'Veg',
+          mealType: 'Dinner',
+          cuisine: 'Italian',
+          description: 'Layers of vegetables, tomato sauce, and cheese baked fresh in small batches.',
+          readyBy: 'Ready by 8:00 PM',
+          distance: '2.7 km away',
+          highlight: 'A richer dinner pick when you want something special at home.',
+        },
+        {
+          name: 'Banana Almond Overnight Oats',
+          chef: 'Chef Tara L.',
+          price: 943,
+          diet: 'Vegan',
+          mealType: 'Breakfast',
+          cuisine: 'Continental',
+          description: 'Chilled oats with banana, almond milk, chia seeds, and seasonal fruit.',
+          readyBy: 'Ready by 7:00 AM',
+          distance: '1.0 km away',
+          highlight: 'Ideal for a quick vegan breakfast that still feels homemade.',
+        },
+        {
+          name: 'Millet Buddha Bowl',
+          chef: 'Chef Aditi V.',
+          price: 1226,
+          diet: 'Vegan',
+          mealType: 'Lunch',
+          cuisine: 'Fusion',
+          description: 'Millets, roasted vegetables, hummus, and lemon dressing in one bowl.',
+          readyBy: 'Ready by 12:15 PM',
+          distance: '1.6 km away',
+          highlight: 'Balanced lunch with plant protein and fresh vegetables.',
+        },
+        {
+          name: 'Coconut Chickpea Curry',
+          chef: 'Chef Pooja N.',
+          price: 1509,
+          diet: 'Vegan',
+          mealType: 'Dinner',
+          cuisine: 'Indian',
+          description: 'Creamy chickpea curry served with soft coconut rice and fresh herbs.',
+          readyBy: 'Ready by 7:45 PM',
+          distance: '2.2 km away',
+          highlight: 'A hearty dinner that works well when you want something warm and nourishing.',
+        },
+        {
+          name: 'Vegan Thai Basil Noodles',
+          chef: 'Chef Lin S.',
+          price: 1604,
+          diet: 'Vegan',
+          mealType: 'Dinner',
+          cuisine: 'Thai',
+          description: 'Rice noodles tossed with basil, tofu, peppers, and a savory homemade sauce.',
+          readyBy: 'Ready by 8:10 PM',
+          distance: '2.5 km away',
+          highlight: 'Great when you want bold flavor without giving up your vegan preference.',
+        },
+        {
+          name: 'Chicken Keema Toast',
+          chef: 'Chef Arjun K.',
+          price: 1132,
+          diet: 'Non-Veg',
+          mealType: 'Breakfast',
+          cuisine: 'Indian Fusion',
+          description: 'Toasted bread topped with mildly spiced chicken keema and herbs.',
+          readyBy: 'Ready by 8:00 AM',
+          distance: '1.9 km away',
+          highlight: 'Adds protein to breakfast while staying budget aware.',
+        },
+        {
+          name: 'Tandoori Chicken Roti Roll',
+          chef: 'Chef Imran H.',
+          price: 1415,
+          diet: 'Non-Veg',
+          mealType: 'Lunch',
+          cuisine: 'North Indian',
+          description: 'Soft roti rolled with tandoori chicken, onions, and mint yogurt.',
+          readyBy: 'Ready by 1:00 PM',
+          distance: '2.0 km away',
+          highlight: 'Easy to eat on a busy day and still feels homemade.',
+        },
+        {
+          name: 'Lemon Chicken Rice',
+          chef: 'Chef Sahana B.',
+          price: 1556,
+          diet: 'Non-Veg',
+          mealType: 'Lunch',
+          cuisine: 'Asian Fusion',
+          description: 'Zesty chicken rice bowl with vegetables and a light homemade glaze.',
+          readyBy: 'Ready by 12:45 PM',
+          distance: '2.4 km away',
+          highlight: 'Useful when you need something filling for lunch without going too heavy.',
+        },
+        {
+          name: 'Home-Style Fish Curry',
+          chef: 'Chef Rehan M.',
+          price: 1792,
+          diet: 'Non-Veg',
+          mealType: 'Dinner',
+          cuisine: 'Coastal Indian',
+          description: 'Classic fish curry with steamed rice and a simple cucumber salad.',
+          readyBy: 'Ready by 8:00 PM',
+          distance: '2.8 km away',
+          highlight: 'A cozy dinner option for seafood lovers.',
+        },
+        {
+          name: 'Pepper Chicken Stew Box',
+          chef: 'Chef Joel P.',
+          price: 1981,
+          diet: 'Non-Veg',
+          mealType: 'Dinner',
+          cuisine: 'South Indian',
+          description: 'Pepper chicken stew with appam-style bread and sauteed vegetables.',
+          readyBy: 'Ready by 8:20 PM',
+          distance: '3.1 km away',
+          highlight: 'Worth considering when you can stretch the budget a little for dinner.',
+        },
+      ];
+      let hasCompletedMealSearch = false;
+
+      /* ========================================
+         Helper Functions
+      ======================================== */
+      function formatCurrency(value) {
+        return inrFormatter.format(Number(value));
+      }
+
+      function getSelectedDietPreference() {
+        const selectedDiet = dietInputs.find((input) => input.checked);
+        return selectedDiet ? selectedDiet.value : '';
+      }
+
+      function getMealMatchPreferences() {
+        return {
+          budget: budgetInput.value.trim(),
+          diet: getSelectedDietPreference(),
+          mealType: mealTypeSelect.value,
+        };
+      }
+
+      function hasValidMealMatchPreferences() {
+        const preferences = getMealMatchPreferences();
+        const budgetValue = Number(preferences.budget);
+
+        return Boolean(preferences.diet && preferences.mealType && preferences.budget)
+          && Number.isInteger(budgetValue)
+          && budgetValue >= MIN_BUDGET_INR
+          && budgetValue <= MAX_BUDGET_INR;
+      }
+
+      function updateBudgetOutput() {
+        budgetOutput.textContent = budgetInput.value ? formatCurrency(Number(budgetInput.value)) : 'Not set';
+      }
+
+      function validateBudgetInput() {
+        const budgetValue = Number(budgetInput.value);
+
+        if (!budgetInput.value) {
+          budgetInput.setCustomValidity('Please enter your maximum meal budget.');
+        } else if (!Number.isInteger(budgetValue)) {
+          budgetInput.setCustomValidity('Please enter a whole number budget for easier matching.');
+        } else if (budgetValue < MIN_BUDGET_INR || budgetValue > MAX_BUDGET_INR) {
+          budgetInput.setCustomValidity(`Enter a budget between ${formatCurrency(MIN_BUDGET_INR)} and ${formatCurrency(MAX_BUDGET_INR)}.`);
+        } else {
+          budgetInput.setCustomValidity('');
+        }
+      }
+
+      function setResultActionsEnabled(isEnabled) {
+        copySummaryButton.disabled = !isEnabled;
+        printResultsButton.disabled = !isEnabled;
+      }
+
+      function updateLocationTip() {
+        const zipCode = zipCodeInput.value.trim();
+
+        mealMatchLocationTip.textContent = zipCode
+          ? `Using zip code ${zipCode} as your nearby meal area.`
+          : 'Add a zip code to make your meal summary feel more local.';
+      }
+
+      function updateSavedPreferenceNote() {
+        const preferences = getMealMatchPreferences();
+
+        if (hasValidMealMatchPreferences()) {
+          savedPreferenceNote.textContent = `Saved choice: ${preferences.diet} ${preferences.mealType.toLowerCase()} up to ${formatCurrency(Number(preferences.budget))}.`;
+        } else if (preferences.budget || preferences.diet || preferences.mealType) {
+          savedPreferenceNote.textContent = 'HomeBite is remembering your current choices. Complete all required fields for a full saved preference.';
+        } else {
+          savedPreferenceNote.textContent = 'No saved meal preference yet. Search once and HomeBite will remember it here.';
+        }
+      }
+
+      function setMealMatchStatus(label, tone) {
+        const toneClasses = {
+          neutral: 'bg-stone-50 border-stone-200 text-stone-500',
+          success: 'bg-orange-50 border-orange-200 text-orange-600',
+          warning: 'bg-amber-50 border-amber-200 text-amber-700',
+        };
+
+        mealMatchStatus.className = `inline-flex items-center justify-center rounded-full border px-3.5 py-1.5 text-xs font-semibold ${toneClasses[tone] || toneClasses.neutral}`;
+        mealMatchStatus.textContent = label;
+      }
+
+      function renderMealMatchPlaceholder(title, description) {
+        mealMatchResults.innerHTML = `
+          <article class="rounded-2xl border border-dashed border-stone-200 bg-stone-50 p-6 md:col-span-2 xl:col-span-3">
+            <h3 class="text-lg font-bold text-gray-900 mb-2">${title}</h3>
+            <p class="text-stone-500 leading-relaxed">${description}</p>
+          </article>
+        `;
+      }
+
+      function buildShareSummaryText() {
+        const resultTitles = Array.from(mealMatchResults.querySelectorAll('article h3.text-xl'))
+          .map((title, index) => `${index + 1}. ${title.textContent.trim()}`)
+          .join('\n');
+
+        return [
+          'HomeBite Smart Meal Match Finder',
+          `Status: ${mealMatchStatus.textContent.trim()}`,
+          `Summary: ${mealMatchSummary.textContent.trim()}`,
+          resultTitles ? `Recommended meals:\n${resultTitles}` : '',
+        ]
+          .filter(Boolean)
+          .join('\n\n');
+      }
+
+      function loadSearchHistory() {
+        try {
+          const savedHistory = localStorage.getItem(SEARCH_HISTORY_STORAGE_KEY);
+          const parsedHistory = savedHistory ? JSON.parse(savedHistory) : [];
+          return Array.isArray(parsedHistory) ? parsedHistory : [];
+        } catch (error) {
+          return [];
+        }
+      }
+
+      function renderSearchHistory(historyEntries = loadSearchHistory()) {
+        if (!historyEntries.length) {
+          searchHistoryContainer.innerHTML = `
+            <article class="rounded-2xl border border-dashed border-stone-200 bg-stone-50 p-6 md:col-span-2 xl:col-span-3">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">No recent searches yet</h3>
+              <p class="text-stone-500 leading-relaxed">
+                Once you run the finder, your latest meal searches will appear here with a quick button to reuse them.
+              </p>
+            </article>
+          `;
+          return;
+        }
+
+        searchHistoryContainer.innerHTML = historyEntries
+          .map((entry, index) => {
+            const searchedAt = new Date(entry.searchedAt).toLocaleString('en-IN', {
+              dateStyle: 'medium',
+              timeStyle: 'short',
+            });
+            const zipLabel = entry.zipCode ? `Near ${entry.zipCode}` : 'No zip code saved';
+            const matchTone = entry.matchType === 'exact'
+              ? 'bg-orange-50 text-orange-600'
+              : entry.matchType === 'closest'
+                ? 'bg-amber-50 text-amber-700'
+                : 'bg-stone-100 text-stone-600';
+            const matchLabel = entry.matchType === 'exact'
+              ? 'Exact match'
+              : entry.matchType === 'closest'
+                ? 'Closest options'
+                : 'No direct data';
+
+            return `
+              <article class="rounded-2xl border border-stone-100 bg-stone-50 p-5">
+                <div class="flex items-start justify-between gap-4 mb-4">
+                  <div>
+                    <p class="text-xs font-semibold uppercase tracking-widest text-stone-400 mb-2">Search ${index + 1}</p>
+                    <h3 class="text-lg font-bold text-gray-900">${entry.diet} ${entry.mealType}</h3>
+                    <p class="text-sm text-stone-500 mt-1">Budget: ${formatCurrency(entry.budget)}</p>
+                  </div>
+                  <span class="inline-flex items-center rounded-full px-3 py-1 text-xs font-semibold ${matchTone}">
+                    ${matchLabel}
+                  </span>
+                </div>
+
+                <div class="grid grid-cols-2 gap-3 text-sm mb-4">
+                  <div class="rounded-xl bg-white p-3 border border-stone-100">
+                    <p class="text-xs font-semibold uppercase tracking-widest text-stone-400 mb-1">Area</p>
+                    <p class="font-medium text-gray-900">${zipLabel}</p>
+                  </div>
+                  <div class="rounded-xl bg-white p-3 border border-stone-100">
+                    <p class="text-xs font-semibold uppercase tracking-widest text-stone-400 mb-1">Searched</p>
+                    <p class="font-medium text-gray-900">${searchedAt}</p>
+                  </div>
+                </div>
+
+                <button
+                  type="button"
+                  data-history-index="${index}"
+                  class="btn-outline w-full"
+                >
+                  Use This Search Again
+                </button>
+              </article>
+            `;
+          })
+          .join('');
+      }
+
+      function saveSearchHistoryEntry(matchType) {
+        const preferences = getMealMatchPreferences();
+        const entry = {
+          budget: Number(preferences.budget),
+          diet: preferences.diet,
+          mealType: preferences.mealType,
+          zipCode: zipCodeInput.value.trim(),
+          matchType,
+          searchedAt: new Date().toISOString(),
+        };
+
+        try {
+          const existingHistory = loadSearchHistory().filter((historyEntry) => {
+            return !(
+              historyEntry.budget === entry.budget
+              && historyEntry.diet === entry.diet
+              && historyEntry.mealType === entry.mealType
+              && historyEntry.zipCode === entry.zipCode
+            );
+          });
+          const updatedHistory = [entry, ...existingHistory].slice(0, MAX_SEARCH_HISTORY);
+
+          localStorage.setItem(SEARCH_HISTORY_STORAGE_KEY, JSON.stringify(updatedHistory));
+          renderSearchHistory(updatedHistory);
+        } catch (error) {
+          renderSearchHistory(loadSearchHistory());
+        }
+      }
+
+      function applyHistoryEntry(entry) {
+        zipCodeInput.value = entry.zipCode || '';
+        budgetInput.value = String(entry.budget);
+        mealTypeSelect.value = entry.mealType;
+
+        dietInputs.forEach((input) => {
+          input.checked = input.value === entry.diet;
+        });
+
+        validateBudgetInput();
+        updateBudgetOutput();
+        saveZipCode();
+        saveMealMatchPreferences();
+        updateLocationTip();
+        hasCompletedMealSearch = true;
+        renderMealMatches(getMealMatchPreferences());
+        mealMatchFeedback.textContent = 'A recent search was loaded again successfully.';
+      }
+
+      function saveZipCode() {
+        try {
+          localStorage.setItem(ZIP_STORAGE_KEY, zipCodeInput.value.trim());
+        } catch (error) {
+          /* The page still works even if storage is unavailable. */
+        }
+      }
+
+      function saveMealMatchPreferences() {
+        const preferences = getMealMatchPreferences();
+
+        try {
+          if (!preferences.budget && !preferences.diet && !preferences.mealType) {
+            localStorage.removeItem(MEAL_MATCH_STORAGE_KEY);
+          } else {
+            localStorage.setItem(MEAL_MATCH_STORAGE_KEY, JSON.stringify(preferences));
+          }
+        } catch (error) {
+          /* The page still works even if storage is unavailable. */
+        }
+
+        updateSavedPreferenceNote();
+      }
+
+      function loadMealMatchPreferences() {
+        try {
+          const savedPreferences = localStorage.getItem(MEAL_MATCH_STORAGE_KEY);
+          return savedPreferences ? JSON.parse(savedPreferences) : null;
+        } catch (error) {
+          return null;
+        }
+      }
+
+      function applySavedMealMatchPreferences(savedPreferences) {
+        if (!savedPreferences) {
+          return;
+        }
+
+        if (savedPreferences.budget) {
+          budgetInput.value = savedPreferences.budget;
+        }
+
+        if (savedPreferences.mealType) {
+          mealTypeSelect.value = savedPreferences.mealType;
+        }
+
+        if (savedPreferences.diet) {
+          const matchingDietInput = dietInputs.find((input) => input.value === savedPreferences.diet);
+
+          if (matchingDietInput) {
+            matchingDietInput.checked = true;
+          }
+        }
+      }
+
+      function buildMealMatchCard(meal, budget, isExactMatch, index) {
+        const budgetGap = Number((budget - meal.price).toFixed(2));
+        const badgeLabel = isExactMatch
+          ? index === 0 ? 'Best match' : 'Good fit'
+          : index === 0 ? 'Closest option' : 'Stretch pick';
+        const accentBarClass = isExactMatch ? 'bg-orange-400' : 'bg-amber-400';
+        const badgeClass = isExactMatch ? 'bg-orange-50 text-orange-600' : 'bg-amber-50 text-amber-700';
+        const panelClass = isExactMatch
+          ? 'bg-orange-50 border-orange-100 text-orange-700'
+          : 'bg-amber-50 border-amber-100 text-amber-700';
+
+        let matchReason = '';
+
+        if (isExactMatch && budgetGap === 0) {
+          matchReason = 'This meal uses your full budget perfectly.';
+        } else if (isExactMatch) {
+          matchReason = `Fits your budget with ${formatCurrency(budgetGap)} to spare.`;
+        } else {
+          matchReason = `${formatCurrency(Math.abs(budgetGap))} above your budget, but it is the closest available choice.`;
+        }
+
+        return `
+          <article class="meal-card rounded-2xl bg-stone-50 border border-stone-100 overflow-hidden">
+            <div class="h-2 w-full ${accentBarClass}"></div>
+            <div class="p-6">
+              <div class="flex items-start justify-between gap-4 mb-4">
+                <div>
+                  <div class="flex flex-wrap items-center gap-2 mb-3">
+                    <span class="inline-flex items-center rounded-full px-3 py-1 text-xs font-semibold ${badgeClass}">${badgeLabel}</span>
+                    <span class="inline-flex items-center rounded-full bg-white px-3 py-1 text-xs font-semibold text-stone-600 border border-stone-100">${meal.cuisine}</span>
+                  </div>
+                  <h3 class="text-xl font-bold text-gray-900 leading-snug">${meal.name}</h3>
+                  <p class="text-sm text-stone-500 mt-1">By ${meal.chef}</p>
+                </div>
+                <span class="font-serif text-2xl font-bold text-gray-900">${formatCurrency(meal.price)}</span>
+              </div>
+
+              <p class="text-stone-600 leading-relaxed mb-5">${meal.description}</p>
+
+              <div class="grid grid-cols-2 gap-3 mb-5 text-sm">
+                <div class="rounded-xl bg-white p-3 border border-stone-100">
+                  <p class="text-xs font-semibold uppercase tracking-widest text-stone-400 mb-1">Diet</p>
+                  <p class="font-medium text-gray-900">${meal.diet}</p>
+                </div>
+                <div class="rounded-xl bg-white p-3 border border-stone-100">
+                  <p class="text-xs font-semibold uppercase tracking-widest text-stone-400 mb-1">Meal</p>
+                  <p class="font-medium text-gray-900">${meal.mealType}</p>
+                </div>
+              </div>
+
+              <div class="rounded-2xl border p-4 ${panelClass}">
+                <p class="text-xs font-semibold uppercase tracking-widest mb-2">Why it helps</p>
+                <p class="text-sm leading-relaxed">${matchReason} ${meal.highlight}</p>
+              </div>
+
+              <div class="mt-5 pt-4 border-t border-stone-100 flex items-center justify-between text-sm text-stone-500 gap-4">
+                <span>${meal.readyBy}</span>
+                <span>${meal.distance}</span>
+              </div>
+            </div>
+          </article>
+        `;
+      }
+
+      function renderMealMatches(preferences) {
+        const budget = Number(preferences.budget);
+        const nearbyZipCode = zipCodeInput.value.trim();
+        const locationSuffix = nearbyZipCode ? ` near ${nearbyZipCode}` : '';
+        const matchingMeals = smartMeals.filter((meal) => {
+          return meal.diet === preferences.diet && meal.mealType === preferences.mealType;
+        });
+
+        if (!matchingMeals.length) {
+          renderMealMatchPlaceholder(
+            'No meals available yet',
+            `HomeBite does not have ${preferences.diet.toLowerCase()} ${preferences.mealType.toLowerCase()} meals in this sample data right now.`
+          );
+          mealMatchSummary.textContent = 'Try another dietary preference or meal type to explore more homemade options.';
+          setMealMatchStatus('No data', 'warning');
+          hasCompletedMealSearch = true;
+          setResultActionsEnabled(true);
+          return 'no-data';
+        }
+
+        const exactMatches = matchingMeals
+          .filter((meal) => meal.price <= budget)
+          .sort((firstMeal, secondMeal) => {
+            const firstGap = budget - firstMeal.price;
+            const secondGap = budget - secondMeal.price;
+
+            if (firstGap !== secondGap) {
+              return firstGap - secondGap;
+            }
+
+            return secondMeal.price - firstMeal.price;
+          });
+
+        if (exactMatches.length > 0) {
+          const mealsToShow = exactMatches.slice(0, 3);
+          const mealLabel = mealsToShow.length === 1 ? 'meal' : 'meals';
+
+          mealMatchResults.innerHTML = mealsToShow
+            .map((meal, index) => buildMealMatchCard(meal, budget, true, index))
+            .join('');
+          mealMatchSummary.textContent = `We found ${mealsToShow.length} ${preferences.diet.toLowerCase()} ${preferences.mealType.toLowerCase()} ${mealLabel}${locationSuffix} within ${formatCurrency(budget)}.`;
+          setMealMatchStatus('Exact matches', 'success');
+          mealMatchFeedback.textContent = 'Results updated and preferences saved on this device.';
+          hasCompletedMealSearch = true;
+          setResultActionsEnabled(true);
+          return 'exact';
+        }
+
+        const closestAlternatives = matchingMeals
+          .slice()
+          .sort((firstMeal, secondMeal) => Math.abs(firstMeal.price - budget) - Math.abs(secondMeal.price - budget))
+          .slice(0, 3);
+
+        mealMatchResults.innerHTML = closestAlternatives
+          .map((meal, index) => buildMealMatchCard(meal, budget, false, index))
+          .join('');
+        mealMatchSummary.textContent = `There is no ${preferences.diet.toLowerCase()} ${preferences.mealType.toLowerCase()} meal${locationSuffix} within ${formatCurrency(budget)} right now, but these are the closest homemade options.`;
+        setMealMatchStatus('Closest alternatives', 'warning');
+        mealMatchFeedback.textContent = 'We saved your choice and showed the closest available meals.';
+        hasCompletedMealSearch = true;
+        setResultActionsEnabled(true);
+        return 'closest';
+      }
+
+      function refreshMealMatchesAfterFieldChange() {
+        validateBudgetInput();
+        updateBudgetOutput();
+        saveZipCode();
+        saveMealMatchPreferences();
+        updateLocationTip();
+
+        if (!hasCompletedMealSearch) {
+          return;
+        }
+
+        if (hasValidMealMatchPreferences()) {
+          renderMealMatches(getMealMatchPreferences());
+          return;
+        }
+
+        renderMealMatchPlaceholder(
+          'Waiting for complete preferences',
+          'Fill in all required fields again to refresh your personalized meal suggestions.'
+        );
+        mealMatchSummary.textContent = 'Complete all required fields again to refresh your personalized meal suggestions.';
+        mealMatchFeedback.textContent = 'Your current inputs are still being saved on this device.';
+        setMealMatchStatus('Waiting for details', 'neutral');
+        setResultActionsEnabled(false);
+      }
+
+      /* ========================================
+         Initial State
+      ======================================== */
+      try {
+        const savedZipCode = localStorage.getItem(ZIP_STORAGE_KEY);
+
+        if (savedZipCode) {
+          zipCodeInput.value = savedZipCode;
+        }
+      } catch (error) {
+        /* Ignore storage errors and continue with an empty field. */
+      }
+
+      const savedMealMatchPreferences = loadMealMatchPreferences();
+      if (savedMealMatchPreferences) {
+        applySavedMealMatchPreferences(savedMealMatchPreferences);
+      }
+
+      updateBudgetOutput();
+      validateBudgetInput();
+      updateSavedPreferenceNote();
+      updateLocationTip();
+      renderSearchHistory();
+      setResultActionsEnabled(false);
+
+      if (hasValidMealMatchPreferences()) {
+        renderMealMatches(getMealMatchPreferences());
+        mealMatchFeedback.textContent = 'Your saved meal finder choices were loaded automatically.';
+      }
+
+      /* ========================================
+         Event Listeners
+      ======================================== */
+      zipCodeInput.addEventListener('input', () => {
+        saveZipCode();
+        updateLocationTip();
+
+        if (hasCompletedMealSearch && hasValidMealMatchPreferences()) {
+          renderMealMatches(getMealMatchPreferences());
+        }
+      });
+
+      budgetInput.addEventListener('input', refreshMealMatchesAfterFieldChange);
+      mealTypeSelect.addEventListener('change', refreshMealMatchesAfterFieldChange);
+      dietInputs.forEach((input) => {
+        input.addEventListener('change', refreshMealMatchesAfterFieldChange);
+      });
+
+      mealMatchForm.addEventListener('submit', (event) => {
+        event.preventDefault();
+        validateBudgetInput();
+
+        if (!mealMatchForm.checkValidity()) {
+          mealMatchForm.reportValidity();
+          mealMatchFeedback.textContent = 'Please complete all required fields before searching for meal matches.';
+          setMealMatchStatus('Need details', 'warning');
+          return;
+        }
+
+        saveZipCode();
+        saveMealMatchPreferences();
+        updateLocationTip();
+        const matchType = renderMealMatches(getMealMatchPreferences());
+        saveSearchHistoryEntry(matchType);
+      });
+
+      copySummaryButton.addEventListener('click', async () => {
+        try {
+          await navigator.clipboard.writeText(buildShareSummaryText());
+          mealMatchFeedback.textContent = 'Match summary copied to your clipboard.';
+        } catch (error) {
+          mealMatchFeedback.textContent = 'Unable to copy the match summary in this browser.';
+        }
+      });
+
+      printResultsButton.addEventListener('click', () => {
+        mealMatchFeedback.textContent = 'Opening the browser print dialog for your current meal results.';
+        window.print();
+      });
+
+      searchHistoryContainer.addEventListener('click', (event) => {
+        const reuseButton = event.target.closest('[data-history-index]');
+
+        if (!reuseButton) {
+          return;
+        }
+
+        const historyIndex = Number(reuseButton.dataset.historyIndex);
+        const historyEntries = loadSearchHistory();
+        const selectedEntry = historyEntries[historyIndex];
+
+        if (!selectedEntry) {
+          return;
+        }
+
+        applyHistoryEntry(selectedEntry);
+      });
+
+      clearMatchButton.addEventListener('click', () => {
+        mealMatchForm.reset();
+        budgetInput.setCustomValidity('');
+        hasCompletedMealSearch = false;
+
+        try {
+          localStorage.removeItem(MEAL_MATCH_STORAGE_KEY);
+        } catch (error) {
+          /* Ignore storage errors because the visual reset still works. */
+        }
+
+        try {
+          const savedZipCode = localStorage.getItem(ZIP_STORAGE_KEY);
+          zipCodeInput.value = savedZipCode || '';
+        } catch (error) {
+          zipCodeInput.value = '';
+        }
+
+        updateBudgetOutput();
+        updateSavedPreferenceNote();
+        updateLocationTip();
+        mealMatchFeedback.textContent = 'Saved meal preferences cleared. Your zip code is kept for nearby meal context.';
+        mealMatchSummary.textContent = 'Complete the form to see meal recommendations generated just for this search.';
+        renderMealMatchPlaceholder(
+          'No meal search yet',
+          'Enter a budget, choose a dietary preference, and pick a meal type. HomeBite will generate matching homemade meal cards here.'
+        );
+        setMealMatchStatus('Ready to match', 'neutral');
+        setResultActionsEnabled(false);
+      });
+    });
+  </script>
+</body>
+</html>
