@@ -472,6 +472,8 @@
       const printResultsButton = document.getElementById('print-results-btn');
       const searchHistoryContainer = document.getElementById('search-history-container');
       const clearMatchButton = document.getElementById('clear-match-btn');
+      const submitMatchButton = mealMatchForm.querySelector('button[type="submit"]');
+      const actionButtons = [submitMatchButton, clearMatchButton, copySummaryButton, printResultsButton];
       const ZIP_STORAGE_KEY = 'homebiteZipCode';
       const MEAL_MATCH_STORAGE_KEY = 'homebiteMealMatchPreferences';
       const SEARCH_HISTORY_STORAGE_KEY = 'homebiteMealMatchHistory';
@@ -655,10 +657,38 @@
         },
       ];
       let hasCompletedMealSearch = false;
+      let feedbackResetTimeoutId = null;
+      let resizeAnnouncementTimeoutId = null;
+      let currentViewportMode = '';
 
       /* ========================================
          Helper Functions
       ======================================== */
+      function setMealMatchFeedback(message, persist = true) {
+        if (feedbackResetTimeoutId) {
+          window.clearTimeout(feedbackResetTimeoutId);
+          feedbackResetTimeoutId = null;
+        }
+
+        mealMatchFeedback.textContent = message;
+
+        if (persist) {
+          mealMatchFeedback.dataset.persistentMessage = message;
+        }
+      }
+
+      function restoreMealMatchFeedback() {
+        mealMatchFeedback.textContent = mealMatchFeedback.dataset.persistentMessage || '';
+      }
+
+      function showTemporaryFeedback(message, timeoutMs = 2200) {
+        setMealMatchFeedback(message, false);
+        feedbackResetTimeoutId = window.setTimeout(() => {
+          restoreMealMatchFeedback();
+          feedbackResetTimeoutId = null;
+        }, timeoutMs);
+      }
+
       function formatCurrency(value) {
         return inrFormatter.format(Number(value));
       }
@@ -729,7 +759,7 @@
         }
       }
 
-      function setMealMatchStatus(label, tone) {
+      function setMealMatchStatus(label, tone, persist = true) {
         const toneClasses = {
           neutral: 'bg-stone-50 border-stone-200 text-stone-500',
           success: 'bg-orange-50 border-orange-200 text-orange-600',
@@ -738,6 +768,204 @@
 
         mealMatchStatus.className = `inline-flex items-center justify-center rounded-full border px-3.5 py-1.5 text-xs font-semibold ${toneClasses[tone] || toneClasses.neutral}`;
         mealMatchStatus.textContent = label;
+
+        if (persist) {
+          mealMatchStatus.dataset.statusLabel = label;
+          mealMatchStatus.dataset.statusTone = tone || 'neutral';
+        }
+      }
+
+      function restoreMealMatchStatus() {
+        setMealMatchStatus(
+          mealMatchStatus.dataset.statusLabel || 'Ready to match',
+          mealMatchStatus.dataset.statusTone || 'neutral',
+          false
+        );
+      }
+
+      function getViewportMode() {
+        if (window.innerWidth < 640) {
+          return 'mobile';
+        }
+
+        if (window.innerWidth < 1024) {
+          return 'tablet';
+        }
+
+        return 'desktop';
+      }
+
+      function getViewportMessage(viewportMode) {
+        if (viewportMode === 'mobile') {
+          return 'Mobile view active. The form and results are stacked for easier scrolling.';
+        }
+
+        if (viewportMode === 'tablet') {
+          return 'Tablet view active. The form and meal cards have more room side-by-side.';
+        }
+
+        return 'Desktop view active. You can compare more meal cards at once.';
+      }
+
+      function announceViewportMode(isInitialLoad = false) {
+        const nextViewportMode = getViewportMode();
+
+        mealMatchForm.dataset.viewport = nextViewportMode;
+        mealMatchResults.dataset.viewport = nextViewportMode;
+        searchHistoryContainer.dataset.viewport = nextViewportMode;
+
+        if (!isInitialLoad && nextViewportMode === currentViewportMode) {
+          return;
+        }
+
+        currentViewportMode = nextViewportMode;
+        const messagePrefix = isInitialLoad ? 'Smart Meal Match is ready.' : 'Window resized.';
+        showTemporaryFeedback(`${messagePrefix} ${getViewportMessage(nextViewportMode)}`, isInitialLoad ? 2800 : 1800);
+      }
+
+      function getFieldFocusMessage(target) {
+        if (target === zipCodeInput) {
+          return 'Optional: add a nearby zip code to make the meal summary and saved search note feel more local.';
+        }
+
+        if (target === budgetInput) {
+          return `Enter a whole-number budget between ${formatCurrency(MIN_BUDGET_INR)} and ${formatCurrency(MAX_BUDGET_INR)} for accurate matching.`;
+        }
+
+        if (target === mealTypeSelect) {
+          return 'Choose whether you want a breakfast, lunch, or dinner recommendation.';
+        }
+
+        if (dietInputs.includes(target)) {
+          return 'Pick one dietary preference so the Smart Meal Match can narrow your meal list quickly.';
+        }
+
+        return '';
+      }
+
+      function previewCurrentFilters() {
+        const preferences = getMealMatchPreferences();
+
+        if (preferences.diet && preferences.mealType && hasValidMealMatchPreferences()) {
+          return `${preferences.diet} ${preferences.mealType.toLowerCase()} meals are ready to be matched within ${formatCurrency(Number(preferences.budget))}.`;
+        }
+
+        if (preferences.diet && preferences.mealType) {
+          return `${preferences.diet} ${preferences.mealType.toLowerCase()} filters are selected. Add a valid budget to complete the match.`;
+        }
+
+        if (preferences.diet) {
+          return `${preferences.diet} meals selected. Choose a meal type and budget to continue.`;
+        }
+
+        if (preferences.mealType) {
+          return `${preferences.mealType} selected. Add a dietary preference and budget to continue.`;
+        }
+
+        return '';
+      }
+
+      function handleFieldFocus(event) {
+        const focusMessage = getFieldFocusMessage(event.target);
+
+        if (focusMessage) {
+          setMealMatchFeedback(focusMessage, false);
+        }
+      }
+
+      function handleFieldBlur(event) {
+        const { target } = event;
+
+        if (target === zipCodeInput) {
+          const sanitizedZipCode = zipCodeInput.value.replace(/\D+/g, '').slice(0, zipCodeInput.maxLength || 10);
+
+          if (zipCodeInput.value !== sanitizedZipCode) {
+            zipCodeInput.value = sanitizedZipCode;
+            saveZipCode();
+            updateLocationTip();
+          }
+
+          if (sanitizedZipCode && sanitizedZipCode.length < 5) {
+            showTemporaryFeedback('Zip codes work best with at least 5 digits for clearer nearby context.');
+            return;
+          }
+
+          restoreMealMatchFeedback();
+          return;
+        }
+
+        if (target === budgetInput) {
+          validateBudgetInput();
+          updateBudgetOutput();
+
+          if (!budgetInput.value) {
+            restoreMealMatchFeedback();
+            return;
+          }
+
+          if (budgetInput.validationMessage) {
+            showTemporaryFeedback(budgetInput.validationMessage);
+            return;
+          }
+
+          showTemporaryFeedback(`Budget confirmed at ${formatCurrency(Number(budgetInput.value))}.`);
+          return;
+        }
+
+        if (target === mealTypeSelect) {
+          if (mealTypeSelect.value) {
+            showTemporaryFeedback(`${mealTypeSelect.value} selected. HomeBite can now narrow the time-of-day match.`);
+          } else {
+            restoreMealMatchFeedback();
+          }
+          return;
+        }
+
+        if (dietInputs.includes(target)) {
+          const selectedDiet = getSelectedDietPreference();
+
+          if (selectedDiet) {
+            showTemporaryFeedback(`${selectedDiet} preference selected for your next meal search.`);
+          } else {
+            restoreMealMatchFeedback();
+          }
+        }
+      }
+
+      function getButtonHoverMessage(button) {
+        if (button === submitMatchButton) {
+          return 'Run the finder with your current budget, diet, and meal type.';
+        }
+
+        if (button === clearMatchButton) {
+          return 'Clear saved meal preferences while keeping your zip code for nearby meal context.';
+        }
+
+        if (button === copySummaryButton) {
+          return button.disabled
+            ? 'Complete a successful search first to copy a meal summary.'
+            : 'Copy the current summary and recommended meal list to your clipboard.';
+        }
+
+        if (button === printResultsButton) {
+          return button.disabled
+            ? 'Complete a successful search first to print the results.'
+            : 'Open the browser print dialog for the meal results currently on screen.';
+        }
+
+        return '';
+      }
+
+      function handleActionButtonMouseOver(event) {
+        const hoverMessage = getButtonHoverMessage(event.currentTarget);
+
+        if (hoverMessage) {
+          setMealMatchFeedback(hoverMessage, false);
+        }
+      }
+
+      function handleActionButtonMouseOut() {
+        restoreMealMatchFeedback();
       }
 
       function renderMealMatchPlaceholder(title, description) {
@@ -887,7 +1115,7 @@
         updateLocationTip();
         hasCompletedMealSearch = true;
         renderMealMatches(getMealMatchPreferences());
-        mealMatchFeedback.textContent = 'A recent search was loaded again successfully.';
+        setMealMatchFeedback('A recent search was loaded again successfully.');
       }
 
       function saveZipCode() {
@@ -1051,7 +1279,7 @@
             .join('');
           mealMatchSummary.textContent = `We found ${mealsToShow.length} ${preferences.diet.toLowerCase()} ${preferences.mealType.toLowerCase()} ${mealLabel}${locationSuffix} within ${formatCurrency(budget)}.`;
           setMealMatchStatus('Exact matches', 'success');
-          mealMatchFeedback.textContent = 'Results updated and preferences saved on this device.';
+          setMealMatchFeedback('Results updated and preferences saved on this device.');
           hasCompletedMealSearch = true;
           setResultActionsEnabled(true);
           return 'exact';
@@ -1067,7 +1295,7 @@
           .join('');
         mealMatchSummary.textContent = `There is no ${preferences.diet.toLowerCase()} ${preferences.mealType.toLowerCase()} meal${locationSuffix} within ${formatCurrency(budget)} right now, but these are the closest homemade options.`;
         setMealMatchStatus('Closest alternatives', 'warning');
-        mealMatchFeedback.textContent = 'We saved your choice and showed the closest available meals.';
+        setMealMatchFeedback('We saved your choice and showed the closest available meals.');
         hasCompletedMealSearch = true;
         setResultActionsEnabled(true);
         return 'closest';
@@ -1094,7 +1322,7 @@
           'Fill in all required fields again to refresh your personalized meal suggestions.'
         );
         mealMatchSummary.textContent = 'Complete all required fields again to refresh your personalized meal suggestions.';
-        mealMatchFeedback.textContent = 'Your current inputs are still being saved on this device.';
+        setMealMatchFeedback('Your current inputs are still being saved on this device.');
         setMealMatchStatus('Waiting for details', 'neutral');
         setResultActionsEnabled(false);
       }
@@ -1122,19 +1350,36 @@
       updateSavedPreferenceNote();
       updateLocationTip();
       renderSearchHistory();
+      setMealMatchFeedback(mealMatchFeedback.textContent.trim());
+      setMealMatchStatus(mealMatchStatus.textContent.trim(), 'neutral');
       setResultActionsEnabled(false);
 
       if (hasValidMealMatchPreferences()) {
         renderMealMatches(getMealMatchPreferences());
-        mealMatchFeedback.textContent = 'Your saved meal finder choices were loaded automatically.';
+        setMealMatchFeedback('Your saved meal finder choices were loaded automatically.');
       }
 
       /* ========================================
          Event Listeners
       ======================================== */
+      mealMatchForm.addEventListener('focus', handleFieldFocus, true);
+      mealMatchForm.addEventListener('blur', handleFieldBlur, true);
+
       zipCodeInput.addEventListener('input', () => {
+        const sanitizedZipCode = zipCodeInput.value.replace(/\D+/g, '').slice(0, zipCodeInput.maxLength || 10);
+
+        if (zipCodeInput.value !== sanitizedZipCode) {
+          zipCodeInput.value = sanitizedZipCode;
+        }
+
         saveZipCode();
         updateLocationTip();
+
+        if (!zipCodeInput.value.trim()) {
+          showTemporaryFeedback('Nearby area cleared. Meal summaries will use the full sample data set.');
+        } else if (zipCodeInput.value.trim().length >= 5) {
+          showTemporaryFeedback(`Nearby area updated to ${zipCodeInput.value.trim()}.`, 1500);
+        }
 
         if (hasCompletedMealSearch && hasValidMealMatchPreferences()) {
           renderMealMatches(getMealMatchPreferences());
@@ -1142,18 +1387,50 @@
       });
 
       budgetInput.addEventListener('input', refreshMealMatchesAfterFieldChange);
+      budgetInput.addEventListener('input', () => {
+        const budgetValue = Number(budgetInput.value);
+
+        if (!budgetInput.value) {
+          return;
+        }
+
+        if (
+          Number.isInteger(budgetValue)
+          && budgetValue >= MIN_BUDGET_INR
+          && budgetValue <= MAX_BUDGET_INR
+        ) {
+          showTemporaryFeedback(`Budget preview: ${formatCurrency(budgetValue)} is ready for matching.`, 1500);
+        }
+      });
+
       mealTypeSelect.addEventListener('change', refreshMealMatchesAfterFieldChange);
+      mealTypeSelect.addEventListener('change', () => {
+        const filterPreview = previewCurrentFilters();
+
+        if (filterPreview) {
+          showTemporaryFeedback(filterPreview, 1800);
+        }
+      });
+
       dietInputs.forEach((input) => {
         input.addEventListener('change', refreshMealMatchesAfterFieldChange);
+        input.addEventListener('change', () => {
+          const filterPreview = previewCurrentFilters();
+
+          if (filterPreview) {
+            showTemporaryFeedback(filterPreview, 1800);
+          }
+        });
       });
 
       mealMatchForm.addEventListener('submit', (event) => {
         event.preventDefault();
         validateBudgetInput();
+        setMealMatchStatus('Checking preferences', 'neutral');
 
         if (!mealMatchForm.checkValidity()) {
           mealMatchForm.reportValidity();
-          mealMatchFeedback.textContent = 'Please complete all required fields before searching for meal matches.';
+          setMealMatchFeedback('Please complete all required fields before searching for meal matches.');
           setMealMatchStatus('Need details', 'warning');
           return;
         }
@@ -1168,14 +1445,14 @@
       copySummaryButton.addEventListener('click', async () => {
         try {
           await navigator.clipboard.writeText(buildShareSummaryText());
-          mealMatchFeedback.textContent = 'Match summary copied to your clipboard.';
+          setMealMatchFeedback('Match summary copied to your clipboard.');
         } catch (error) {
-          mealMatchFeedback.textContent = 'Unable to copy the match summary in this browser.';
+          setMealMatchFeedback('Unable to copy the match summary in this browser.');
         }
       });
 
       printResultsButton.addEventListener('click', () => {
-        mealMatchFeedback.textContent = 'Opening the browser print dialog for your current meal results.';
+        setMealMatchFeedback('Opening the browser print dialog for your current meal results.');
         window.print();
       });
 
@@ -1195,6 +1472,40 @@
         }
 
         applyHistoryEntry(selectedEntry);
+      });
+
+      actionButtons.forEach((button) => {
+        button.addEventListener('mouseover', handleActionButtonMouseOver);
+        button.addEventListener('mouseout', handleActionButtonMouseOut);
+      });
+
+      mealMatchResults.addEventListener('mouseover', (event) => {
+        const hoveredCard = event.target.closest('.meal-card');
+
+        if (!hoveredCard || hoveredCard.contains(event.relatedTarget)) {
+          return;
+        }
+
+        const mealTitle = hoveredCard.querySelector('h3')?.textContent.trim() || 'This meal';
+        const mealChef = hoveredCard.querySelector('p.text-sm.text-stone-500')?.textContent.trim() || '';
+        const mealPrice = hoveredCard.querySelector('.font-serif.text-2xl')?.textContent.trim() || '';
+
+        setMealMatchStatus('Previewing meal', 'neutral', false);
+        setMealMatchFeedback(
+          `${mealTitle}${mealChef ? `, ${mealChef}` : ''}${mealPrice ? `, currently listed at ${mealPrice}.` : '.'}`,
+          false
+        );
+      });
+
+      mealMatchResults.addEventListener('mouseout', (event) => {
+        const hoveredCard = event.target.closest('.meal-card');
+
+        if (!hoveredCard || hoveredCard.contains(event.relatedTarget)) {
+          return;
+        }
+
+        restoreMealMatchStatus();
+        restoreMealMatchFeedback();
       });
 
       clearMatchButton.addEventListener('click', () => {
@@ -1218,7 +1529,7 @@
         updateBudgetOutput();
         updateSavedPreferenceNote();
         updateLocationTip();
-        mealMatchFeedback.textContent = 'Saved meal preferences cleared. Your zip code is kept for nearby meal context.';
+        setMealMatchFeedback('Saved meal preferences cleared. Your zip code is kept for nearby meal context.');
         mealMatchSummary.textContent = 'Complete the form to see meal recommendations generated just for this search.';
         renderMealMatchPlaceholder(
           'No meal search yet',
@@ -1226,6 +1537,20 @@
         );
         setMealMatchStatus('Ready to match', 'neutral');
         setResultActionsEnabled(false);
+      });
+
+      window.addEventListener('load', () => {
+        announceViewportMode(true);
+      });
+
+      window.addEventListener('resize', () => {
+        if (resizeAnnouncementTimeoutId) {
+          window.clearTimeout(resizeAnnouncementTimeoutId);
+        }
+
+        resizeAnnouncementTimeoutId = window.setTimeout(() => {
+          announceViewportMode();
+        }, 180);
       });
     });
   </script>

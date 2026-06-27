@@ -1,128 +1,155 @@
-# HomeBite Smart Meal Match Finder
+# HomeBite
+
+HomeBite is a front-end prototype for a homemade meal discovery platform built for a Full Stack Development CIA / lab assessment. The project now includes a redesigned landing page and a separate Smart Meal Match module, both created with HTML5, Tailwind CSS, and inline JavaScript.
 
 ## Project Overview
-HomeBite is a front-end prototype for a homemade meal discovery platform.  
-The main enhancement in this project is the **Smart Meal Match Finder**, a separate interactive module that helps users discover suitable homemade meals based on:
 
-- Budget
-- Dietary preference
-- Meal type
-- Nearby zip code
+This prototype focuses on helping users discover homemade meals more quickly and interactively.
 
-This prototype is designed for a **Full Stack Development CIA assessment** and focuses on solving a real user problem using HTML5, Tailwind CSS, and JavaScript.
+The project currently has two main pages:
+
+- `index.html` - the HomeBite landing page with a premium hero layout, popular meals showcase, testimonials, and browser API demonstrations
+- `smart-meal-match.html` - the Smart Meal Match Finder page with filtering, saved preferences, search history, and enhanced event-driven feedback
+
+## Recent Updates
+
+- Redesigned the HomeBite landing page to match a richer mockup-style layout
+- Kept the Smart Meal Match page as a separate feature module
+- Added Lab Exercise 3 event handling directly inside both HTML files using inline JavaScript
+- Preserved the existing browser API demonstrations and interactive features
+
+## Landing Page Features (`index.html`)
+
+- Redesigned navigation, hero section, feature ribbon, meal showcase, testimonials, and footer
+- Smart Meal Match call-to-action linked from the landing page
+- Popular meal cards styled as draggable recommendation cards
+- Inline SVG-based visual elements for the updated hero presentation
+
+### Browser APIs and Interactions on the Landing Page
+
+- `localStorage` to save and restore the zip code
+- Geolocation API to show live coordinates
+- Notification API to request and display browser notifications
+- Clipboard API to copy the website link
+- Drag and Drop API to reorder meal cards
+
+### Lab Exercise 3 Events on the Landing Page
+
+- `DOMContentLoaded` / load-style welcome message
+- `input` live ZIP preview
+- `resize` browser-width badge
+- `mouseover` meal card highlight and scale-up
+- `mouseout` meal card reset
+
+## Smart Meal Match Features (`smart-meal-match.html`)
+
+- Separate form-driven meal recommendation module
+- Budget-based filtering in INR
+- Dietary preference selection
+- Meal type selection for breakfast, lunch, or dinner
+- Optional zip code support for more local-feeling summaries
+- Exact-match recommendations when meals fit the selected budget
+- Closest-alternative suggestions when no exact budget match exists
+- Recent search history with one-click reuse
+- Copy summary button using the Clipboard API
+- Print results button using `window.print()`
+- Saved preferences and search history using `localStorage`
+
+### Lab Exercise 3 Events on the Smart Meal Match Page
+
+- `load` responsive readiness message
+- `focus` contextual guidance for active form fields
+- `blur` cleanup and validation feedback for completed fields
+- `input` live feedback for zip code and budget entry
+- `change` dynamic preview messages for meal type and diet selection
+- `submit` controlled validation and status updates
+- `mouseover` action-button guidance and meal-card preview messaging
+- `mouseout` status and feedback reset
+- `resize` viewport-aware responsiveness feedback
 
 ## Problem Statement
-Many users know their food budget and dietary needs, but still spend unnecessary time scrolling through options that do not match their requirements.
 
-The Smart Meal Match Finder improves this process by:
+Users often know their budget and dietary preference before they know which meal to choose. Without filtering, they spend unnecessary time browsing options that do not match their needs.
 
-- Filtering meals instantly
-- Showing suitable homemade meal options
-- Suggesting the closest alternatives if no exact budget match exists
-- Saving preferences for repeat users
-- Allowing users to reuse recent searches
+HomeBite addresses this by:
+
+- narrowing meal choices with simple inputs
+- giving instant feedback through JavaScript
+- showing exact matches first
+- suggesting close alternatives when needed
+- saving preferences for repeat use
 
 ## Target Users
 
-- College students looking for affordable homemade meals
-- Busy professionals who want quick meal suggestions
-- Families with dietary preferences
-- Users who prefer homemade food over restaurant delivery
-
-## Features Implemented
-
-- Responsive landing page using Tailwind CSS
-- Separate Smart Meal Match Finder page
-- HTML5 semantic structure
-- Form handling with client-side validation
-- Dynamic meal filtering using JavaScript
-- Conditional result generation
-- Local Storage for:
-  - zip code
-  - saved meal preferences
-  - recent search history
-- Clipboard support to copy the result summary
-- Browser print support to print the current results
-- Reuse button for recent searches
-- INR-based pricing throughout the prototype
-
-## HTML5 / Browser Features Used
-
-- `localStorage`
-- `datalist`
-- `output`
-- `input` validation attributes
-- Clipboard API
-- `window.print()`
+- College students looking for affordable homemade food
+- Busy professionals who want fast meal suggestions
+- Families with specific dietary preferences
+- Users who prefer homemade meals over restaurant delivery
 
 ## Technologies Used
 
 - HTML5
-- Tailwind CSS (via CDN)
-- JavaScript (Vanilla JS)
+- Tailwind CSS via CDN
+- Vanilla JavaScript
 
-## File Structure
+## HTML5 and Browser Features Used
 
-- `index.html`  
-  Main HomeBite landing page
-
-- `smart-meal-match.html`  
-  Separate Smart Meal Match Finder module
-
-- `README.md`  
-  Project documentation for GitHub submission
+- Semantic HTML structure
+- `localStorage`
+- `datalist`
+- `output`
+- HTML5 form validation attributes
+- Geolocation API
+- Notification API
+- Clipboard API
+- Drag and Drop API
+- `window.print()`
+- DOM event handling
 
 ## JavaScript Concepts Demonstrated
 
 - DOM selection and manipulation
-- Event listeners
+- Event-driven UI updates
 - Form validation
-- Arrays and filtering
 - Conditional logic
+- Array filtering and sorting
 - Template literals
 - Dynamic HTML rendering
+- Event delegation
 - Local storage persistence
 - Reusable helper functions
 
-## Innovation / Value Addition
-This project goes beyond a static landing page by adding a meaningful interactive tool that solves a genuine decision-making problem for users.
+## File Structure
 
-Extra value additions include:
+- `index.html` - redesigned HomeBite landing page
+- `smart-meal-match.html` - Smart Meal Match Finder module
+- `README.md` - project documentation
 
-- Closest-match logic when exact matches are unavailable
-- Search history with one-click reuse
-- Copy and print actions for current results
-- Separated module architecture instead of crowding the landing page
-
-## How To Run
+## How to Run
 
 1. Open `index.html` in a browser.
-2. Click **Open Smart Meal Match Finder**.
-3. Fill in the form and test the interactive features.
+2. Explore the landing page interactions and browser API demos.
+3. Click the Smart Meal Match button, or open `smart-meal-match.html` directly.
+4. Test the form, dynamic feedback, saved preferences, history reuse, copy summary, and print results.
+
+## Suggested Demo Flow
+
+1. Show the redesigned landing page.
+2. Demonstrate ZIP saving, notifications, geolocation, clipboard, and drag-and-drop.
+3. Open Smart Meal Match.
+4. Enter a budget, choose a diet, choose a meal type, and submit.
+5. Show exact matches or closest alternatives.
+6. Reuse a recent search and demonstrate copy/print actions.
+7. Mention the Lab Exercise 3 event handling added to both pages.
 
 ## Responsible AI Usage Note
-AI tools were used for ideation, UI improvement, debugging support, and documentation refinement.  
-The final code and project structure were reviewed and organized for learning and assessment use.
 
-## Suggested PPT Sections
-
-1. Title slide
-2. Problem statement
-3. Target users
-4. Existing problem in meal discovery
-5. Proposed solution: HomeBite Smart Meal Match Finder
-6. Features implemented
-7. Technologies used
-8. JavaScript concepts demonstrated
-9. HTML5/browser features used
-10. Responsible AI usage
-11. Future scope
-12. Learning reflection
+AI tools were used for ideation, UI refinement, debugging support, and documentation updates. The final files were reviewed and organized for assessment use and learning.
 
 ## Future Scope
 
 - Real backend integration
-- Live chef inventory
-- Dynamic exchange-rate or pricing updates
-- Login-based personalized meal history
-- Order placement workflow
+- Live chef inventory and database storage
+- Real order placement workflow
+- Authentication-based personalized history
+- Dynamic location-aware meal discovery
