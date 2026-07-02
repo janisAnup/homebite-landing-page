@@ -1,0 +1,24 @@
+{
+  "name": "homebite-landing-page",
+  "version": "1.0.0",
+  "description": "HomeBite is a front-end prototype for a homemade meal discovery platform built for a Full Stack Development CIA / lab assessment. The project now includes a redesigned landing page and a separate Smart Meal Match module, both created with HTML5, Tailwind CSS, and inline JavaScript.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/janisAnup/homebite-landing-page.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/janisAnup/homebite-landing-page/issues"
+  },
+  "homepage": "https://github.com/janisAnup/homebite-landing-page#readme",
+  "dependencies": {
+    "express": "^5.2.1"
+  }
+}
