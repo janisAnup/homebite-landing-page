@@ -1294,7 +1294,7 @@
 <body>
   <header class="site-header">
     <div class="site-header__inner">
-      <a href="#" class="brand">
+      <a href="index.html" class="brand" aria-label="HomeBite home">
         <span class="brand__icon" aria-hidden="true">
           <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 24 24" fill="none">
             <path d="M4 10.5L12 4L20 10.5V19A1 1 0 0 1 19 20H5A1 1 0 0 1 4 19V10.5Z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" />
@@ -1316,16 +1316,23 @@
       </nav>
 
       <div class="header-actions">
-        <a href="smart-meal-match.html" class="btn-primary header-match">
+        <a href="login.html" class="btn-primary header-match">
           <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
             <path d="M12 2l1.76 5.24L19 9l-5.24 1.76L12 16l-1.76-5.24L5 9l5.24-1.76L12 2Z" />
             <path d="M19 14l.88 2.62L22.5 17.5l-2.62.88L19 21l-.88-2.62L15.5 17.5l2.62-.88L19 14Z" />
           </svg>
-          Smart Meal Match
+          Login
         </a>
       </div>
 
-      <button id="menu-toggle" aria-label="Toggle menu" onclick="toggleMenu()">
+      <button
+        id="menu-toggle"
+        type="button"
+        aria-label="Toggle menu"
+        aria-controls="mobile-menu"
+        aria-expanded="false"
+        onclick="toggleMenu()"
+      >
         <svg
           id="icon-open"
           xmlns="http://www.w3.org/2000/svg"
@@ -1353,13 +1360,13 @@
         </svg>
       </button>
 
-      <div id="mobile-menu">
+      <nav id="mobile-menu" aria-label="Mobile navigation" aria-hidden="true">
         <a href="#how-it-works" onclick="closeMenu()">How it Works</a>
         <a href="#popular-meals" onclick="closeMenu()">Popular Meals</a>
         <a href="#testimonials" onclick="closeMenu()">Testimonials</a>
         <a href="#become-a-chef" onclick="closeMenu()">Become a Chef</a>
-        <a href="smart-meal-match.html" class="btn-primary" onclick="closeMenu()">Smart Meal Match</a>
-      </div>
+        <a href="login.html" class="btn-primary" onclick="closeMenu()">Login</a>
+      </nav>
     </div>
   </header>
 
@@ -1392,13 +1399,20 @@
                     <path stroke-linecap="round" stroke-linejoin="round" d="M12 21s7-5.33 7-11a7 7 0 1 0-14 0c0 5.67 7 11 7 11Z" />
                     <circle cx="12" cy="10" r="2.6" />
                   </svg>
-                  <input id="zip-code" type="text" placeholder="Enter your area or ZIP code" />
+                  <input
+                    id="zip-code"
+                    type="text"
+                    inputmode="numeric"
+                    autocomplete="postal-code"
+                    aria-label="Enter your area or ZIP code"
+                    placeholder="Enter your area or ZIP code"
+                  />
                 </div>
 
-                <button id="find-food-btn" class="btn-primary">Find Home Meals</button>
+                <button id="find-food-btn" type="button" class="btn-primary">Find Home Meals</button>
               </div>
 
-              <p id="location-output" class="hero-location-output"></p>
+              <p id="location-output" class="hero-location-output" role="status" aria-live="polite"></p>
             </div>
 
             <div class="hero-benefits">
@@ -1775,7 +1789,7 @@
           </p>
         </div>
 
-        <a href="#" class="btn-primary">Start Cooking With HomeBite</a>
+        <a href="login.html" class="btn-primary">Start Cooking With HomeBite</a>
       </div>
     </section>
 
@@ -1859,8 +1873,8 @@
       </div>
 
       <div class="site-footer__actions">
-        <button id="enable-notifications-btn" class="footer-chip">Enable Notifications</button>
-        <button id="copy-link-btn" class="footer-chip">Copy Website Link</button>
+        <button id="enable-notifications-btn" type="button" class="footer-chip">Enable Notifications</button>
+        <button id="copy-link-btn" type="button" class="footer-chip">Copy Website Link</button>
       </div>
     </div>
   </footer>
@@ -1873,10 +1887,13 @@
     ======================================== */
     function setMenuState(isOpen) {
       const menu = document.getElementById('mobile-menu');
+      const menuToggle = document.getElementById('menu-toggle');
       const iconOpen = document.getElementById('icon-open');
       const iconClose = document.getElementById('icon-close');
 
       menu.classList.toggle('open', isOpen);
+      menu.setAttribute('aria-hidden', String(!isOpen));
+      menuToggle.setAttribute('aria-expanded', String(isOpen));
       iconOpen.classList.toggle('hidden', isOpen);
       iconClose.classList.toggle('hidden', !isOpen);
     }

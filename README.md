@@ -1,27 +1,30 @@
 # HomeBite
 
-HomeBite is a front-end prototype for a homemade meal discovery platform built for a Full Stack Development CIA / lab assessment. The project now includes a redesigned landing page and a separate Smart Meal Match module, both created with HTML5, Tailwind CSS, and inline JavaScript.
+HomeBite is a homemade meal discovery prototype built for a Full Stack Development lab assessment. The project now includes a redesigned landing page, an Express-based login flow, role-based dashboard redirects, and a customer dashboard with the full Smart Meal Match experience built in.
 
 ## Project Overview
 
-This prototype focuses on helping users discover homemade meals more quickly and interactively.
+The app currently centers around these pages:
 
-The project currently has two main pages:
+- `index.html` - landing page with the HomeBite hero layout, popular meals, testimonials, and browser API demonstrations
+- `login.html` - role-based login page for `Customer` and `HomeCook`
+- `customer_dashboard.html` - customer dashboard containing the complete Smart Meal Match feature
+- `homecook_dashboard.html` - home cook dashboard entry page
+- `server.js` - Express server for static hosting and login validation
 
-- `index.html` - the HomeBite landing page with a premium hero layout, popular meals showcase, testimonials, and browser API demonstrations
-- `smart-meal-match.html` - the Smart Meal Match Finder page with filtering, saved preferences, search history, and enhanced event-driven feedback
+## Current Flow
 
-## Recent Updates
-
-- Redesigned the HomeBite landing page to match a richer mockup-style layout
-- Kept the Smart Meal Match page as a separate feature module
-- Added Lab Exercise 3 event handling directly inside both HTML files using inline JavaScript
-- Preserved the existing browser API demonstrations and interactive features
+1. Open the landing page.
+2. Click `Login`.
+3. Select a role and enter password `123`.
+4. Get redirected to:
+   - `customer_dashboard.html` for customers
+   - `homecook_dashboard.html` for home cooks
 
 ## Landing Page Features (`index.html`)
 
 - Redesigned navigation, hero section, feature ribbon, meal showcase, testimonials, and footer
-- Smart Meal Match call-to-action linked from the landing page
+- Login call-to-action in both desktop and mobile navigation
 - Popular meal cards styled as draggable recommendation cards
 - Inline SVG-based visual elements for the updated hero presentation
 
@@ -35,19 +38,27 @@ The project currently has two main pages:
 
 ### Lab Exercise 3 Events on the Landing Page
 
-- `DOMContentLoaded` / load-style welcome message
+- `DOMContentLoaded` welcome message
 - `input` live ZIP preview
 - `resize` browser-width badge
 - `mouseover` meal card highlight and scale-up
 - `mouseout` meal card reset
 
-## Smart Meal Match Features (`smart-meal-match.html`)
+## Login Features (`login.html` + `server.js`)
 
-- Separate form-driven meal recommendation module
+- Role dropdown for `Customer` and `HomeCook`
+- Password-based validation using Express `POST /login`
+- Password check using demo password `123`
+- Error feedback for missing or invalid credentials
+- Role-based redirect to the correct dashboard
+
+## Customer Dashboard Features (`customer_dashboard.html`)
+
+- Full Smart Meal Match feature moved into the dashboard
 - Budget-based filtering in INR
 - Dietary preference selection
 - Meal type selection for breakfast, lunch, or dinner
-- Optional zip code support for more local-feeling summaries
+- Optional zip code support for local-feeling summaries
 - Exact-match recommendations when meals fit the selected budget
 - Closest-alternative suggestions when no exact budget match exists
 - Recent search history with one-click reuse
@@ -55,7 +66,7 @@ The project currently has two main pages:
 - Print results button using `window.print()`
 - Saved preferences and search history using `localStorage`
 
-### Lab Exercise 3 Events on the Smart Meal Match Page
+### Lab Exercise 3 Events on the Customer Dashboard
 
 - `load` responsive readiness message
 - `focus` contextual guidance for active form fields
@@ -66,6 +77,11 @@ The project currently has two main pages:
 - `mouseover` action-button guidance and meal-card preview messaging
 - `mouseout` status and feedback reset
 - `resize` viewport-aware responsiveness feedback
+
+## HomeCook Dashboard Features (`homecook_dashboard.html`)
+
+- Simple post-login dashboard for the home cook role
+- Links back to the landing page, login page, and customer Smart Meal Match dashboard
 
 ## Problem Statement
 
@@ -91,6 +107,7 @@ HomeBite addresses this by:
 - HTML5
 - Tailwind CSS via CDN
 - Vanilla JavaScript
+- Express.js
 
 ## HTML5 and Browser Features Used
 
@@ -118,29 +135,33 @@ HomeBite addresses this by:
 - Event delegation
 - Local storage persistence
 - Reusable helper functions
+- Fetch-based form submission
 
 ## File Structure
 
 - `index.html` - redesigned HomeBite landing page
-- `smart-meal-match.html` - Smart Meal Match Finder module
+- `login.html` - role-based login page
+- `customer_dashboard.html` - customer dashboard with Smart Meal Match
+- `homecook_dashboard.html` - home cook dashboard
+- `server.js` - Express server
 - `README.md` - project documentation
 
 ## How to Run
 
-1. Open `index.html` in a browser.
-2. Explore the landing page interactions and browser API demos.
-3. Click the Smart Meal Match button, or open `smart-meal-match.html` directly.
-4. Test the form, dynamic feedback, saved preferences, history reuse, copy summary, and print results.
+1. Install dependencies if needed with `npm install`.
+2. Start the Express server with `npm start`.
+3. Open `http://localhost:3000`.
+4. Click `Login` and test the role-based flow.
+5. Use the customer dashboard to test Smart Meal Match, saved preferences, search history, copy summary, and print results.
 
 ## Suggested Demo Flow
 
 1. Show the redesigned landing page.
 2. Demonstrate ZIP saving, notifications, geolocation, clipboard, and drag-and-drop.
-3. Open Smart Meal Match.
-4. Enter a budget, choose a diet, choose a meal type, and submit.
-5. Show exact matches or closest alternatives.
-6. Reuse a recent search and demonstrate copy/print actions.
-7. Mention the Lab Exercise 3 event handling added to both pages.
+3. Open the login page.
+4. Log in as a customer with password `123`.
+5. Demonstrate Smart Meal Match inside the customer dashboard.
+6. Log in as a home cook and show the alternate dashboard redirect.
 
 ## Responsible AI Usage Note
 
@@ -148,7 +169,7 @@ AI tools were used for ideation, UI refinement, debugging support, and documenta
 
 ## Future Scope
 
-- Real backend integration
+- Real backend authentication
 - Live chef inventory and database storage
 - Real order placement workflow
 - Authentication-based personalized history

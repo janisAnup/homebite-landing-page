@@ -3,10 +3,10 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>HomeBite | Smart Meal Match Finder</title>
+  <title>HomeBite | Customer Dashboard</title>
   <meta
     name="description"
-    content="Use HomeBite's Smart Meal Match Finder to discover homemade meals based on budget, diet, and meal type."
+    content="Customer dashboard with the full HomeBite Smart Meal Match experience."
   />
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -162,6 +162,7 @@
       <div class="flex items-center gap-2 sm:gap-3">
         <a href="index.html#popular-meals" class="btn-ghost hidden sm:inline-flex">Popular Meals</a>
         <a href="index.html" class="btn-outline">Back to Home</a>
+        <a href="login.html" class="btn-primary">Back to Login</a>
       </div>
     </div>
   </header>
@@ -179,17 +180,17 @@
               stroke="currentColor"
               stroke-width="2"
             >
-              <path stroke-linecap="round" stroke-linejoin="round" d="M12 8c-1.657 0-3 1.12-3 2.5S10.343 13 12 13s3 1.12 3 2.5S13.657 18 12 18m0-10V6m0 12v-2m8-4a8 8 0 11-16 0 8 8 0 0116 0z" />
+              <path stroke-linecap="round" stroke-linejoin="round" d="M5.25 5.653A48.804 48.804 0 0112 5.25c2.25 0 4.465.151 6.75.403m-13.5 0A2.25 2.25 0 003 7.903v8.194a2.25 2.25 0 002.25 2.25h13.5A2.25 2.25 0 0021 16.097V7.903a2.25 2.25 0 00-2.25-2.25m-13.5 0A2.25 2.25 0 017.5 3.403h9a2.25 2.25 0 012.25 2.25" />
             </svg>
-            <span>Dedicated meal planning page for quick homemade choices</span>
+            <span>Customer Dashboard</span>
           </div>
 
           <h1 class="font-serif text-4xl md:text-6xl font-bold text-gray-900 leading-tight tracking-tight mb-5">
-            Smart Meal Match <span class="text-orange-500 italic">Finder</span>
+            Smart Meal Match <span class="text-orange-500 italic">for you</span>
           </h1>
 
           <p class="text-lg md:text-xl text-stone-500 leading-relaxed max-w-2xl">
-            Pick your budget, dietary preference, and meal type to discover homemade meals that fit your day. This page keeps the full feature separate from the landing page while staying fully in the HomeBite style.
+            You are signed in as a HomeBite customer. Use your dashboard to match homemade meals by budget, dietary preference, and meal type without leaving the customer experience.
           </p>
         </div>
       </div>
@@ -327,10 +328,10 @@
           </article>
 
           <aside class="rounded-3xl bg-orange-50 border border-orange-100 p-6 md:p-8">
-            <h2 class="text-2xl font-bold text-gray-900 mb-4">How the page helps</h2>
+            <h2 class="text-2xl font-bold text-gray-900 mb-4">How the dashboard helps</h2>
             <div class="space-y-4 text-stone-600 leading-relaxed">
               <p>
-                Instead of browsing every dish manually, this page uses conditional logic to filter a meal list based on your form selections.
+                Instead of browsing every dish manually, this dashboard uses conditional logic to filter a meal list based on your form selections.
               </p>
               <p>
                 If nothing fits your exact budget, the page still helps by showing the closest available homemade options instead of leaving the user stuck.
@@ -356,9 +357,9 @@
               </div>
 
               <div class="rounded-2xl bg-white/90 border border-white px-5 py-4">
-                <p class="text-xs font-semibold uppercase tracking-widest text-stone-400 mb-2">Assessment concepts</p>
+                <p class="text-xs font-semibold uppercase tracking-widest text-stone-400 mb-2">Customer tools</p>
                 <p class="text-sm text-gray-900 leading-relaxed">
-                  HTML5 form inputs, <code class="font-mono text-[0.95em]">datalist</code>, <code class="font-mono text-[0.95em]">output</code>, validation, DOM updates, conditional rendering, <code class="font-mono text-[0.95em]">localStorage</code>, the Clipboard API, and browser print support all work together in this module.
+                  HTML5 form inputs, <code class="font-mono text-[0.95em]">datalist</code>, <code class="font-mono text-[0.95em]">output</code>, validation, DOM updates, conditional rendering, <code class="font-mono text-[0.95em]">localStorage</code>, the Clipboard API, and browser print support all work together in this dashboard.
                 </p>
               </div>
             </div>
@@ -381,6 +382,8 @@
               <span
                 id="meal-match-status"
                 class="inline-flex items-center justify-center rounded-full bg-stone-50 border border-stone-200 px-3.5 py-1.5 text-xs font-semibold text-stone-500"
+                aria-live="polite"
+                aria-atomic="true"
               >
                 Ready to match
               </span>
@@ -446,7 +449,7 @@
 
   <footer class="bg-gray-900 text-gray-100 py-10">
     <div class="max-w-6xl mx-auto px-4 md:px-6 flex flex-col md:flex-row items-center justify-between gap-4 text-sm">
-      <p class="text-gray-400">&copy; 2026 HomeBite Inc. Smart choices for homemade food.</p>
+      <p class="text-gray-400">&copy; 2026 HomeBite Inc. Customer-ready homemade food matches.</p>
       <a href="index.html" class="hover:text-orange-400 transition-colors">Return to HomeBite</a>
     </div>
   </footer>
@@ -819,7 +822,7 @@
         }
 
         currentViewportMode = nextViewportMode;
-        const messagePrefix = isInitialLoad ? 'Smart Meal Match is ready.' : 'Window resized.';
+        const messagePrefix = isInitialLoad ? 'Customer dashboard is ready.' : 'Window resized.';
         showTemporaryFeedback(`${messagePrefix} ${getViewportMessage(nextViewportMode)}`, isInitialLoad ? 2800 : 1800);
       }
 
@@ -983,7 +986,7 @@
           .join('\n');
 
         return [
-          'HomeBite Smart Meal Match Finder',
+          'HomeBite Smart Meal Match',
           `Status: ${mealMatchStatus.textContent.trim()}`,
           `Summary: ${mealMatchSummary.textContent.trim()}`,
           resultTitles ? `Recommended meals:\n${resultTitles}` : '',
