@@ -6,5 +6,13 @@
     "role": "customer",
     "createdAt": "2026-07-27T03:04:31.239Z",
     "passwordHash": "c97b8a61a10df0052da9e3cded77d471:8ef01b0128f9d2c4dda9838dcfa13c0a07bea35582b10ca8a275d6ceaa97422dd140ebe8899703a5a8a2938674e7b8628c94c03d32d71ab868b792bdfcbfcfca"
+  },
+  {
+    "id": "52e5221e-cad2-431b-b89d-359a48b52a80",
+    "username": "ivy",
+    "email": "ivyanup@gmail.com",
+    "role": "homecook",
+    "passwordHash": "b73e02c305e15120692f29a5bf3fc8d3:fe79f77f3f08599a13b42b65c3f0a2eaab8af06598a7a6a776c827e0b185dd77cb087e688f86d03b0a3572e710f36dfc3ffd9a5c706ae028e1249018dad9a53a",
+    "createdAt": "2026-07-27T05:47:02.213Z"
   }
 ]

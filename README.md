@@ -1,176 +1,68 @@
-# HomeBite
+# HomeBite — React + Express
 
-HomeBite is a homemade meal discovery prototype built for a Full Stack Development lab assessment. The project now includes a redesigned landing page, an Express-based login flow, role-based dashboard redirects, and a customer dashboard with the full Smart Meal Match experience built in.
+HomeBite is a responsive homemade-meal marketplace built for Lab Exercises 5 and 6. The React client preserves the original warm orange HomeBite theme while the Express API provides role-based authentication and complete meal CRUD.
 
-## Project Overview
+## Stack
 
-The app currently centers around these pages:
+- React 19, JSX, React Router, Vite
+- Express 5 with JSON-file models
+- Cookie-based sessions and role-protected routes
+- Tailwind CDN utility styling, localStorage, and browser APIs
 
-- `index.html` - landing page with the HomeBite hero layout, popular meals, testimonials, and browser API demonstrations
-- `login.html` - role-based login page for `Customer` and `HomeCook`
-- `customer_dashboard.html` - customer dashboard containing the complete Smart Meal Match feature
-- `homecook_dashboard.html` - home cook dashboard entry page
-- `server.js` - Express server for static hosting and login validation
+## React architecture
 
-## Current Flow
+```text
+src/client/
+├── context/AuthContext.jsx   # Authentication and role state via Context API
+├── hooks/useMeals.js         # Reusable loading/error-aware API hook
+├── services/api.js           # Fetch client
+├── utils/formatters.js       # Currency and image utilities
+├── main.jsx                  # Router, reusable UI components, and pages
+└── api.js                    # Compatibility re-export
+src/
+├── controllers/              # Express authentication and meal controllers
+├── middleware/               # Authentication, roles, error handling
+├── models/                   # JSON storage models
+└── routes/                   # API route definitions
+```
 
-1. Open the landing page.
-2. Click `Login`.
-3. Select a role and enter password `123`.
-4. Get redirected to:
-   - `customer_dashboard.html` for customers
-   - `homecook_dashboard.html` for home cooks
+## Lab requirements covered
 
-## Landing Page Features (`index.html`)
+- Functional JSX components: `Navbar`, `Footer`, `MealCard`, `MealList`, `MealForm`, dashboards, and auth pages.
+- React Router navigation and protected customer/home-cook routes.
+- `useState`, `useEffect`, Context API (`AuthProvider`/`useAuth`), and custom `useMeals` hook.
+- Controlled login, registration, filter, radio, select, search, and CRUD forms with validation.
+- Conditional rendering, mapped meal/order lists, API loading/error states, PropTypes validation, and confirmation feedback.
+- Create, read, update, and delete meal listings through the existing Express `/api/meals` API.
+- Browser APIs: localStorage favourites/order history, Geolocation, Notifications, Clipboard, FileReader image upload, and draggable meal cards.
 
-- Redesigned navigation, hero section, feature ribbon, meal showcase, testimonials, and footer
-- Login call-to-action in both desktop and mobile navigation
-- Popular meal cards styled as draggable recommendation cards
-- Inline SVG-based visual elements for the updated hero presentation
+## Run
 
-### Browser APIs and Interactions on the Landing Page
+Install dependencies once:
 
-- `localStorage` to save and restore the zip code
-- Geolocation API to show live coordinates
-- Notification API to request and display browser notifications
-- Clipboard API to copy the website link
-- Drag and Drop API to reorder meal cards
+```bash
+npm install
+```
 
-### Lab Exercise 3 Events on the Landing Page
+For development, run the API and Vite in separate terminals:
 
-- `DOMContentLoaded` welcome message
-- `input` live ZIP preview
-- `resize` browser-width badge
-- `mouseover` meal card highlight and scale-up
-- `mouseout` meal card reset
+```bash
+npm start
+npm run dev
+```
 
-## Login Features (`login.html` + `server.js`)
+Vite serves the React client on its displayed URL and proxies `/api` calls to Express on port 3000.
 
-- Role dropdown for `Customer` and `HomeCook`
-- Password-based validation using Express `POST /login`
-- Password check using demo password `123`
-- Error feedback for missing or invalid credentials
-- Role-based redirect to the correct dashboard
+For a production-style local run:
 
-## Customer Dashboard Features (`customer_dashboard.html`)
+```bash
+npm run build
+npm start
+```
 
-- Full Smart Meal Match feature moved into the dashboard
-- Budget-based filtering in INR
-- Dietary preference selection
-- Meal type selection for breakfast, lunch, or dinner
-- Optional zip code support for local-feeling summaries
-- Exact-match recommendations when meals fit the selected budget
-- Closest-alternative suggestions when no exact budget match exists
-- Recent search history with one-click reuse
-- Copy summary button using the Clipboard API
-- Print results button using `window.print()`
-- Saved preferences and search history using `localStorage`
+Open `http://localhost:3000`.
 
-### Lab Exercise 3 Events on the Customer Dashboard
+## Roles
 
-- `load` responsive readiness message
-- `focus` contextual guidance for active form fields
-- `blur` cleanup and validation feedback for completed fields
-- `input` live feedback for zip code and budget entry
-- `change` dynamic preview messages for meal type and diet selection
-- `submit` controlled validation and status updates
-- `mouseover` action-button guidance and meal-card preview messaging
-- `mouseout` status and feedback reset
-- `resize` viewport-aware responsiveness feedback
-
-## HomeCook Dashboard Features (`homecook_dashboard.html`)
-
-- Simple post-login dashboard for the home cook role
-- Links back to the landing page, login page, and customer Smart Meal Match dashboard
-
-## Problem Statement
-
-Users often know their budget and dietary preference before they know which meal to choose. Without filtering, they spend unnecessary time browsing options that do not match their needs.
-
-HomeBite addresses this by:
-
-- narrowing meal choices with simple inputs
-- giving instant feedback through JavaScript
-- showing exact matches first
-- suggesting close alternatives when needed
-- saving preferences for repeat use
-
-## Target Users
-
-- College students looking for affordable homemade food
-- Busy professionals who want fast meal suggestions
-- Families with specific dietary preferences
-- Users who prefer homemade meals over restaurant delivery
-
-## Technologies Used
-
-- HTML5
-- Tailwind CSS via CDN
-- Vanilla JavaScript
-- Express.js
-
-## HTML5 and Browser Features Used
-
-- Semantic HTML structure
-- `localStorage`
-- `datalist`
-- `output`
-- HTML5 form validation attributes
-- Geolocation API
-- Notification API
-- Clipboard API
-- Drag and Drop API
-- `window.print()`
-- DOM event handling
-
-## JavaScript Concepts Demonstrated
-
-- DOM selection and manipulation
-- Event-driven UI updates
-- Form validation
-- Conditional logic
-- Array filtering and sorting
-- Template literals
-- Dynamic HTML rendering
-- Event delegation
-- Local storage persistence
-- Reusable helper functions
-- Fetch-based form submission
-
-## File Structure
-
-- `index.html` - redesigned HomeBite landing page
-- `login.html` - role-based login page
-- `customer_dashboard.html` - customer dashboard with Smart Meal Match
-- `homecook_dashboard.html` - home cook dashboard
-- `server.js` - Express server
-- `README.md` - project documentation
-
-## How to Run
-
-1. Install dependencies if needed with `npm install`.
-2. Start the Express server with `npm start`.
-3. Open `http://localhost:3000`.
-4. Click `Login` and test the role-based flow.
-5. Use the customer dashboard to test Smart Meal Match, saved preferences, search history, copy summary, and print results.
-
-## Suggested Demo Flow
-
-1. Show the redesigned landing page.
-2. Demonstrate ZIP saving, notifications, geolocation, clipboard, and drag-and-drop.
-3. Open the login page.
-4. Log in as a customer with password `123`.
-5. Demonstrate Smart Meal Match inside the customer dashboard.
-6. Log in as a home cook and show the alternate dashboard redirect.
-
-## Responsible AI Usage Note
-
-AI tools were used for ideation, UI refinement, debugging support, and documentation updates. The final files were reviewed and organized for assessment use and learning.
-
-## Future Scope
-
-- Real backend authentication
-- Live chef inventory and database storage
-- Real order placement workflow
-- Authentication-based personalized history
-- Dynamic location-aware meal discovery
+- **Customer:** browse, search/filter, favourite, order, and use Smart Meal Match.
+- **Home Cook:** create, view, edit, and delete personal meal listings, including optional image uploads.
