@@ -1,0 +1,10 @@
+[
+  {
+    "id": "20e4b189-b9e6-4f02-8e25-1fa6b3a5af8a",
+    "username": "janis",
+    "email": "janisanup@gmail.com",
+    "role": "customer",
+    "createdAt": "2026-07-27T03:04:31.239Z",
+    "passwordHash": "c97b8a61a10df0052da9e3cded77d471:8ef01b0128f9d2c4dda9838dcfa13c0a07bea35582b10ca8a275d6ceaa97422dd140ebe8899703a5a8a2938674e7b8628c94c03d32d71ab868b792bdfcbfcfca"
+  }
+]

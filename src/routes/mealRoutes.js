@@ -1,0 +1,2 @@
+const router = require('express').Router(); const controller = require('../controllers/mealController'); const { requireAuth, requireRole } = require('../middleware/auth');
+router.get('/', controller.list); router.get('/mine', requireAuth, requireRole('homecook'), controller.mine); router.post('/', requireAuth, requireRole('homecook'), controller.create); router.put('/:id', requireAuth, requireRole('homecook'), controller.update); router.delete('/:id', requireAuth, requireRole('homecook'), controller.remove); module.exports = router;

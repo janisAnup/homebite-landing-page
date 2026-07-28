@@ -83,8 +83,9 @@ document.addEventListener('DOMContentLoaded', () => {
     try {
       // Collect form values from the HTML form and send them to Express.
       const formData = new FormData(loginForm);
-      const response = await fetch(loginForm.action, {
+      const response = await fetch('/api/auth/login', {
         method: 'POST',
+        credentials: 'same-origin',
         headers: {
           Accept: 'application/json',
           'Content-Type': 'application/x-www-form-urlencoded',
@@ -96,14 +97,14 @@ document.addEventListener('DOMContentLoaded', () => {
       // plus the next URL to open.
       const data = await response.json();
 
-      if (!data.redirectTo) {
-        throw new Error('Missing redirect target.');
-      }
-
       if (!data.ok) {
-        showStatus('error', getStatusMessageFromRedirect(data.redirectTo));
+        showStatus('error', data.message || (data.redirectTo ? getStatusMessageFromRedirect(data.redirectTo) : 'Login failed. Please try again.'));
         resetSubmitButton();
         return;
+      }
+
+      if (!data.redirectTo) {
+        throw new Error('Missing redirect target.');
       }
 
       // On successful login, move the user to the role-specific dashboard.

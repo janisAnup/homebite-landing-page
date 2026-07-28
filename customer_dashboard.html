@@ -162,7 +162,8 @@
       <div class="flex items-center gap-2 sm:gap-3">
         <a href="index.html#popular-meals" class="btn-ghost hidden sm:inline-flex">Popular Meals</a>
         <a href="index.html" class="btn-outline">Back to Home</a>
-        <a href="login.html" class="btn-primary">Back to Login</a>
+        <span data-homebite-user class="hidden text-sm font-semibold text-orange-600 sm:inline"></span>
+        <button data-homebite-logout class="btn-primary">Logout</button>
       </div>
     </div>
   </header>
@@ -454,6 +455,7 @@
     </div>
   </footer>
 
+  <script src="homebite.js"></script>
   <script>
     document.addEventListener('DOMContentLoaded', () => {
       /* ========================================
@@ -489,7 +491,8 @@
         currency: 'INR',
         maximumFractionDigits: 0,
       });
-      const smartMeals = [
+      // API data replaces this fallback list as soon as live Home Cook listings load.
+      let smartMeals = [
         {
           name: 'Masala Oats Upma',
           chef: 'Chef Renu P.',
@@ -659,6 +662,25 @@
           highlight: 'Worth considering when you can stretch the budget a little for dinner.',
         },
       ];
+      async function loadLiveMeals() {
+        try {
+          const response = await fetch('/api/meals', { credentials: 'same-origin' });
+          const data = await response.json();
+          if (!response.ok) throw new Error(data.message);
+          smartMeals = data.meals.map((meal) => ({
+            ...meal,
+            chef: meal.cookName,
+            mealType: meal.mealType || 'Lunch',
+            description: `${meal.cuisine} homemade meal from ${meal.cookName}.`,
+            readyBy: meal.availability === 'Available' ? 'Available to order' : meal.availability,
+            distance: 'Local HomeBite cook',
+            highlight: 'Published live by a HomeBite home cook.',
+          }));
+          if (hasValidMealMatchPreferences()) renderMealMatches(getMealMatchPreferences());
+        } catch (error) {
+          setMealMatchFeedback('Live meal listings could not be loaded right now.');
+        }
+      }
       let hasCompletedMealSearch = false;
       let feedbackResetTimeoutId = null;
       let resizeAnnouncementTimeoutId = null;
@@ -1356,6 +1378,7 @@
       setMealMatchFeedback(mealMatchFeedback.textContent.trim());
       setMealMatchStatus(mealMatchStatus.textContent.trim(), 'neutral');
       setResultActionsEnabled(false);
+      loadLiveMeals();
 
       if (hasValidMealMatchPreferences()) {
         renderMealMatches(getMealMatchPreferences());
