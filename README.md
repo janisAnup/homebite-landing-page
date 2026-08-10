@@ -44,14 +44,13 @@ Install dependencies once:
 npm install
 ```
 
-For development, run the API and Vite in separate terminals:
+For development, run both the Express API and Vite client together:
 
 ```bash
-npm start
 npm run dev
 ```
 
-Vite serves the React client on its displayed URL and proxies `/api` calls to Express on port 3000.
+Vite serves the React client on its displayed URL and proxies `/api` calls to the Express API on port 3000. Use `Ctrl+C` once to stop both services. If you prefer separate terminals, run `npm start` for the API and `npm run vite` for the client.
 
 For a production-style local run:
 
