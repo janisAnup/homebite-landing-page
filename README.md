@@ -1,11 +1,11 @@
 # HomeBite — React + Express
 
-HomeBite is a responsive homemade-meal marketplace built for Lab Exercises 5 and 6. The React client preserves the original warm orange HomeBite theme while the Express API provides role-based authentication and complete meal CRUD.
+HomeBite is a responsive homemade-meal marketplace built for Lab Exercises 5–8. The React client preserves the original warm orange HomeBite theme while the Express API provides role-based authentication, SQLite-backed meal CRUD, and secure Node.js file-system operations.
 
 ## Stack
 
 - React 19, JSX, React Router, Vite
-- Express 5 with JSON-file models
+- Express 5, CORS, and SQLite (`database/homebite.db`) for the Meal Management module
 - Cookie-based sessions and role-protected routes
 - Tailwind CDN utility styling, localStorage, and browser APIs
 
@@ -35,6 +35,12 @@ src/
 - Conditional rendering, mapped meal/order lists, API loading/error states, PropTypes validation, and confirmation feedback.
 - Create, read, update, and delete meal listings through the existing Express `/api/meals` API.
 - Browser APIs: localStorage favourites/order history, Geolocation, Notifications, Clipboard, FileReader image upload, and draggable meal cards.
+- Node.js FS module via `/api/files`: create, read, update/write, append, rename, and delete HomeBite domain-detail `.txt` files. The React interface is at `/fs-lab`.
+- SQLite REST endpoints with path parameters and query filtering: `GET /api/meals/:id` and `GET /api/meals?cuisine=Indian&diet=Veg&maxPrice=250`.
+
+## Exercise 7 and 8 verification
+
+`API_TESTING.md` gives ready-to-run Postman/Thunder Client calls for every required API operation. The SQLite database is created automatically the first time the server starts and is seeded from the project's existing meal data when available.
 
 ## Run
 

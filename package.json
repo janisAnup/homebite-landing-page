@@ -24,12 +24,14 @@
   },
   "homepage": "https://github.com/janisAnup/homebite-landing-page#readme",
   "dependencies": {
+    "cors": "^2.8.6",
     "express": "^5.2.1",
     "framer-motion": "^12.43.0",
     "prop-types": "^15.8.1",
     "react": "^19.2.8",
     "react-dom": "^19.2.8",
-    "react-router-dom": "^7.18.1"
+    "react-router-dom": "^7.18.1",
+    "sqlite3": "^6.0.1"
   },
   "devDependencies": {
     "@vitejs/plugin-react": "^6.0.4",
